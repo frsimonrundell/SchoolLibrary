@@ -1,0 +1,5302 @@
+﻿AppType=JavaFX
+Build1=Default,uk.dotchurch.school.library
+File1=barcode.png
+File10=frmEditChild.bjl
+File11=frmFSBooks.bjl
+File12=frmMainMenu.bjl
+File13=frmReport.bjl
+File14=frmReturn.bjl
+File15=frmSearchBook.bjl
+File16=frmSearchEdit.bjl
+File17=frmSearchLevel.bjl
+File18=frmSettings.bjl
+File19=frmTakeOut.bjl
+File2=ColumnReport.bjl
+File20=lock.png
+File21=logo1.png
+File22=person.png
+File23=pnlActions.bjl
+File24=pnlBackupMenu.bjl
+File25=pnlBarcodes.bjl
+File26=pnlBarcodeTemp.bjl
+File27=pnlBCU.bjl
+File28=pnlBulkBookDelete.bjl
+File29=pnlConfig.bjl
+File3=eye-solid.png
+File30=pnlReportMenu.bjl
+File31=ReportWriterPreview.bjl
+File32=ReportWriterTemplate.bjl
+File33=return.png
+File34=rptBorrowedBooksByClass.bjl
+File35=rptClassUserID.bjl
+File36=rptMissingBooks.bjl
+File37=rptStaffUserIDList.bjl
+File38=SchoolLibrary.png
+File39=search.gif
+File4=frmAddBook.bjl
+File40=search.png
+File41=settings.png
+File42=takeout.png
+File43=tick.png
+File44=unlock.png
+File5=frmAddChild.bjl
+File6=frmAdminPassword.bjl
+File7=frmAdminReturn.bjl
+File8=frmChildSearch.bjl
+File9=frmEditBook.bjl
+FileGroup1=Default Group
+FileGroup10=Default Group
+FileGroup11=Default Group
+FileGroup12=Default Group
+FileGroup13=Default Group
+FileGroup14=Default Group
+FileGroup15=Default Group
+FileGroup16=Default Group
+FileGroup17=Default Group
+FileGroup18=Default Group
+FileGroup19=Default Group
+FileGroup2=Default Group
+FileGroup20=Default Group
+FileGroup21=Default Group
+FileGroup22=Default Group
+FileGroup23=Default Group
+FileGroup24=Default Group
+FileGroup25=Default Group
+FileGroup26=Default Group
+FileGroup27=Default Group
+FileGroup28=Default Group
+FileGroup29=Default Group
+FileGroup3=Default Group
+FileGroup30=Default Group
+FileGroup31=Default Group
+FileGroup32=Default Group
+FileGroup33=Default Group
+FileGroup34=Default Group
+FileGroup35=Default Group
+FileGroup36=Default Group
+FileGroup37=Default Group
+FileGroup38=Default Group
+FileGroup39=Default Group
+FileGroup4=Default Group
+FileGroup40=Default Group
+FileGroup41=Default Group
+FileGroup42=Default Group
+FileGroup43=Default Group
+FileGroup44=Default Group
+FileGroup5=Default Group
+FileGroup6=Default Group
+FileGroup7=Default Group
+FileGroup8=Default Group
+FileGroup9=Default Group
+Group=Default Group
+Library1=b4xtable
+Library10=xui views
+Library2=javaobject
+Library3=jcore
+Library4=jfx
+Library5=jfx8print
+Library6=jnumberspinner
+Library7=jokhttputils2
+Library8=json
+Library9=jsql
+Module1=AdHocWrappers
+Module10=TotalField
+Module11=Utils
+Module2=Code39
+Module3=ColumnField
+Module4=ColumnHeaderField
+Module5=FileChooserUtils
+Module6=ReportWriter
+Module7=ReportWriterPreview
+Module8=StaticField
+Module9=StringUtilities
+NumberOfFiles=44
+NumberOfLibraries=10
+NumberOfModules=11
+Version=9.8
+@EndOfDesignText@
+#Region Project Attributes 
+	#MainFormWidth: 1024
+	#MainFormHeight: 768 
+    'MySQL Connector/J Driver
+    #AdditionalJar: mysql-connector-java-5.1.47-bin.jar
+	#AdditionalJar: java-barcode-2.0.3
+	#AdditionalJar: mysql-backup4j-1.2.1.jar
+	#PackagerProperty: IncludedModules = javafx.web
+#End Region
+
+'====================================================================
+' SchoolLibrary Version 1.1  Jan 2023
+' Fr Simon Rundell SCP simon@rundell.org.uk +44 7976 802123 @frsimon
+'
+' This application is released as OPEN SOURCE Software and as such
+' comes with NO WARRANTY or LIABILITY accepted by the Developer.
+' All I ask is that you pray for me and my my ministry here in Plymouth UK
+' (call it Prayerware if you like)
+'
+' Development History
+'====================
+' 09/11/19			    Initial Alpha
+' 21/11/19				Documentation Edit
+' 26/12/19 				Alpha Test Edit
+' 10/01/20				Beta Test Edit with Improved Logging
+' 18/01/20				After initial demo, list of changes
+'                       esp ISBN Search and focus on BabcockCode as
+'                       main book ID.
+' 22/1/20				ReportWriter 0.7 from Steve05 incorporated
+'						https://www.b4x.com/android/forum/threads/b4j-report-writer.64090/
+' 30/1/20				Integration of Barcode from example by Johan Schoeman
+'						https://www.b4x.com/android/forum/threads/barcodes-qr-codes-pdf417-aztec-codes-code11-code39-code93-ean8-ean13-and-code128.57248/
+' 13/2/20				Export barcode image into blob
+' 15/2/20				Compile textobjects on each form into Lists
+' 27/3/20				Beta sweep
+' 14/4/20				Change to B4XTable and FullScreen View
+' 15/5/20				DeweyRef for Non-Fiction; Delete Book 
+
+' some delays in development due to COVID-19
+' 11/09/21              Change location of App as a result of School Network Implementation.
+' 05/09/22				BETA TEST
+' 06/09/22				Modifications after first contact with Beta Test
+' 23/01/23              Show User ID on creation, include reports of ID numbers for Staff and Childrens
+
+
+
+Sub Process_Globals
+'======================================================
+'Process_Globals
+'=============
+' 0.1	19/11/2019			Initial
+	
+'Purpose:
+'=========
+'
+'Declare variables used across whole application
+'
+'Passed Variables
+'=================
+'
+'None
+'
+'Declared Variables
+'===================
+' Most of these variables are Forms and UI elements
+'
+'
+'Returned Variables
+'===================
+'
+'None
+'
+'Notes
+'=====
+	'
+' These compile directives don't seem to work...
+	'Private InputJar As String = "Z:\Development\SchoolLibrary\Objects\SchoolLibrary.jar" 'change as needed
+	'Private NetFrameworkCSC As String = "%WINDIR%\Microsoft.NET\Framework64\v4.0.30319\csc.exe" 'windows only
+	'Private IconFile As String = "Z:\Development\SchoolLibrary\graphics\icon.ico"
+	'Private ExcludedModules As List
+	'ExcludedModules = Array("javafx.web") 'comment this line if using WebView
+
+
+	'==========True Global Objects=================
+	Private fx As JFX
+	Private MainForm As Form
+	Private XUI As XUI
+	Private su As StringUtilities
+	'Private FC As FileChooser
+	'Private DC As DirectoryChooser
+	'Private tm As Timer
+	 
+	
+	Private TakeOut As Form
+	Private Settings As Form
+	Private ReturnForm As Form
+	Private AdminPass As Form
+	Private AddBook As Form
+	Private EditBook As Form
+	Private SearchBook As Form
+	Private AdminSearch As Form
+	Private AddChild As Form
+	Private EditChild As Form
+	Private ChildSearch As Form
+	Private AdminReturnBook As Form
+	Private LevelSearch As Form
+	Private Report As Form
+	Private Barcode As Form
+	Private FSBooks As Form
+	
+	Private SQL As SQL
+	Private sQuery As String
+
+	Private blNightlyBackups As Int
+	
+	Private flgJustDeleted As Boolean = False
+	
+	'========== Table Lists (for populating B4XTables)=======
+	
+	Public delBookList As List
+	Public userBookList As List
+	
+	'==========DATABASE CONFIG=================
+	Public  SettingsMap As Map
+	Public  SettingsFile As String = "SchoolLibrary.config"
+	Public  constDataLocation As String = "C:\Users\Public\Documents\SchoolLibrary"
+	Private DBLocation As String 
+	Private DBUsername As String 
+	Private DBPassword As String 
+	Private DBName As String
+	Private DBAdminPass As String
+	Private DBMySQL As String
+	Private DBBackupFolder As String
+	Private cSchool As String
+	
+	'==========UI ELEMENTS=========================
+	' MAINFORM
+	Private background As B4XView
+	Private lblMsg As B4XView
+	Private btnExit As B4XView
+	Private btnTakeOut As B4XView
+	Private lblAppTitle As B4XView
+	Private imgTakeOut As B4XView
+	Private imgReturn As B4XView
+	Private imgSearch As B4XView
+	Private lblSchoolName As B4XView
+	Private lblScreenTitle As B4XView
+	Private btnSettings As B4XView
+	
+	'TAKEOUT
+	Private btnTOExit As B4XView
+	Private txtTOUserID As B4XView
+	Private txtTOBook As B4XView
+	Private lblTOBookCheck As B4XView
+	Private btnTObookout As B4XView
+	Private imbTOBarcode As B4XView
+	Private imgTOPerson As B4XView
+	Private lblTOUserCheck As B4XView
+	Private tblVBorrowed As B4XTable
+	Private lblMyBooks As B4XView
+	Private chkTOUserValid As B4XView
+	Private chkTOBookValid As B4XView
+	Private btnTOBookValidate As B4XView
+	Private btnTONotThisBook As B4XView
+	Private btnTONotThisUser As B4XView
+	
+	'SETTINGS
+	'21/1/2020 Added accordian view and divided into 3 panels
+	Private pnSettings As B4XView
+	Private lblSettings1 As B4XView
+	Private txtSettingsSchoolName As B4XView
+	Private lblSettings2 As B4XView
+	Private txtSettingsIPAddress As B4XView
+	Private lblSettings3 As B4XView
+	Private txtSettingsDatabase As B4XView
+	Private lblSettings4 As B4XView
+	Private txtSettingsUsername As B4XView
+	Private lblSettings5 As B4XView
+	Private txtSettingsPassword As B4XView
+	Private txtSettingsAdminPassword As B4XFloatTextField
+	Private lblSettings6 As B4XView
+	Private btnAddBook As B4XView
+	Private btnAddChild As B4XView
+	Private btnAdminSearch As B4XView
+	Private imgLock As B4XView
+	Private lblLockStatus As Label
+	Private btnAdminReturn As B4XView
+	Private btnSearchLevel As B4XView
+	Private acSettings As Accordion
+	
+	
+	'RETURNFORM
+	Private btnRTBook As B4XView
+	Private RTPane As B4XView
+	Private imgRTPerson As B4XView
+	Private txtRTUserID As B4XView
+	Private lblRTBookCheck As B4XView
+	Private imbRTBarcode As B4XView
+	Private txtRTBook As B4XView
+	Private lblRTUserCheck As B4XView
+	Private btnRTbookout As B4XView
+	Private btnRTExit As B4XView
+	Private tblVBorrowedReturn As B4XTable
+	Private btnRTNotThisUser As B4XView
+	Private chkRTUserValid As B4XView
+	Private chkRTBookValid As B4XView
+	Private btnRTNotThisBook As B4XView
+	Private btnRTUserValidate As B4XView
+	Private btnRTBookValidate As B4XView
+	
+	'ADMIN PASSWORD
+	Private adminPassword As  B4XView
+	Private txtAdminPassword As B4XFloatTextField
+	
+	'ADD BOOK 
+	Private btnABCancel As B4XView
+	Private btnABExit As B4XView
+	Private lblAB1 As B4XView
+	Private lblAB2 As B4XView
+	Private lblAB3 As B4XView
+	Private lblAB4 As B4XView
+	Private lblAB5 As B4XView
+	Private lblAB6 As B4XView
+	Private lblAB7 As B4XView
+	Private lblAB8 As B4XView
+	Private lblAB9 As B4XView
+	Private pnlAddBook As B4XView
+	Private txtABARQuiz As B4XView
+	Private txtABAuthor As B4XView
+	Private txtABBabcockCode As B4XView
+	Private txtABISBN As B4XView
+	Private txtABReadingLevel As B4XView
+	Private txtABTitle As B4XView
+	Private cbABCategory As B4XComboBox
+	Private txtABCategory As B4XView
+	Private cbABOwner As B4XComboBox
+	Private txtABOwner As B4XView
+	Private lblAB10 As B4XView
+	Private cbABStatus As B4XComboBox
+	Private txtABStatus As B4XView
+	Private searchISBN As B4XView
+	Private lblAB11 As B4XView
+	Private txtBlurb As B4XView
+	Private txtABMedia As B4XView
+	Private btnASwap As B4XView
+	Private lblAB12 As B4XView
+	Private txtABDeweyRef As B4XView
+	
+	'EDIT BOOK
+	Private btnEBCancel As B4XView
+	Private btnEBExit As B4XView
+	Private txtEBID As B4XView
+	Private pnlEditBook As B4XView
+	Private txtEBTitle As B4XView
+	Private txtEBAuthor As B4XView
+	Private cbEBCategory As B4XComboBox
+	Private txtEBCategory As B4XView
+	Private cbEBStatus As B4XComboBox
+	Private txtEBStatus As B4XView
+	Private cbEBOwner As B4XComboBox
+	Private txtEBOwner As B4XView
+	Private txtEBARQuiz As B4XView
+	Private txtEBReadingLevel As B4XView
+	Private txtEBISBN As B4XView
+	Private txtEBBabcockCode As B4XView
+	Private txtEBBlurb As B4XView
+	Private txtEBMedia As B4XView
+	Private btnSwap As B4XView
+	Private lblEB12 As B4XView
+	Private txtEBDeweyRef As B4XView
+	Private btnDeleteBook As B4XView
+	
+	'SEARCHBOOK AMD ADMINSEARCH
+	Private tblbookSearchResults As B4XTable
+	Private tblbookSearchEditResults As B4XTable
+	Private txtBookSearch As B4XView
+	Private btnSearchBook As B4XView
+	Private lblBS1 As B4XView
+	Private btnBSExit As B4XView
+	Private txtBookSearchEdit As B4XView
+	Private btnBSEditExit As B4XView
+	Private btnAuthCancel As B4XView
+	Private btnSettingsCancel As B4XView
+	Private lblPleaseWait As B4XView
+			
+	' ADD AND EDIT CHILD
+	Private lblAC1 As B4XView
+	Private txtACFirstName As B4XView
+	Private lblAC2 As B4XView
+	Private txtACSurname As B4XView
+	Private lblAC3 As B4XView
+	Private txtACClass As B4XView
+	Private lblAC4 As B4XView
+	Private txtACLevel As B4XView
+	Private lblAC5 As B4XView
+	Private txtACNotes As B4XView
+	Private btnACCancel As B4XView
+	Private btnACClose As B4XView
+	Private chkStaff As B4XView
+	Private lblECID As B4XView
+	Private btnDeleteChild As B4XView
+	
+	Private pnlEditChild As B4XView
+	Private btnEditChild As B4XView
+	Private lblEC1 As B4XView
+	Private txtECFirstName As B4XView
+	Private lblEC2 As B4XView
+	Private txtECSurname As B4XView
+	Private lblEC3 As B4XView
+	Private txtECClass As B4XView
+	Private lblEC4 As B4XView
+	Private txtECLevel As B4XView
+	Private lblEC5 As B4XView
+	Private txtECNotes As B4XView
+	Private btnECCancel As B4XView
+	Private btnECClose As B4XView
+	Private lblChildID As B4XView
+	
+	' CHILD SEARCH
+	Private pnlSearchChild As B4XView
+	Private lblCS1 As B4XView
+	Private txtChildSearchEdit As B4XView
+	Private tblChildSearchEditResults As B4XTable
+	Private btnCSEditExit As B4XView
+
+	
+	' ADMIN BOOK RETURN
+	
+	Private ARTPane As B4XView
+	Private btnARTbookout As B4XView
+	Private btnARTBookValidate As B4XView
+	Private btnARTExit As B4XView
+	Private btnARTNotThisBook As B4XView
+	Private chkARTBookValid As B4XView
+	Private imbARTBarcode As B4XView
+	Private lblARTBookCheck As B4XView
+	Private txtARTBook As B4XView
+	
+	' SEARCH BY LEVEL
+	
+	Private btnLSExit As B4XView
+	Private lblSL1 As B4XView
+	Private pnlSearchLevel As B4XView
+	Private tblLevelSearchResults As B4XTable
+	Private txtLevelSearch As B4XView
+	
+	'BULK CLASS UPDATE PANEL
+	
+	Private lblBCU1 As B4XView
+	Private lblBCU2 As B4XView
+	Private txtBCUFrom As B4XView
+	Private lblBCU3 As B4XView
+	Private txtBCUTo As B4XView
+	Private btnBCUExecute As B4XView
+	Private txtBCU4 As B4XView
+	Private btnDeleteXX As B4XView
+	Private lblBCU5 As B4XView
+	Private pnlRemove As B4XView
+	Private btnBCURefresh As B4XView
+	Private tvBCUUsers As TableView
+	
+	' REPORTS AND PRINTING
+	Private btnPrint As B4XView
+	Private lblReportTitle As B4XView
+	Private pnlA4 As B4XView
+	Private taReportArea As B4XView
+	Private btnReport1 As B4XView
+	Private btnRptClose As B4XView
+	Private btnMissingBooks As B4XView
+	Private btnUserIDByClass As B4XView
+	Private btnStaffUserID As B4XView
+	
+	'BARCODE MANAGEMENT 
+	Private btnGenerateAllBarcodes As B4XView
+	Private pgBarcodes As AnotherProgressBar
+	
+	'Barcode Panel
+	Private pnlBarcode As B4XView
+	Private lblBarcode As B4XView
+	Private cnvBarcode As Canvas
+
+	' BULK BOOK DELETE
+	Private pnlBulkBook As B4XView
+	Private tblbookList As B4XTable
+	Private btnAdd As B4XView
+	Private txtBarcodeDelete As B4XFloatTextField
+	Private btnBulkDelete As B4XView
+
+	' FULL SCREEN BOOK EDIT
+
+	Private pnlFullScreen As B4XView
+	Private tblFSBooks As B4XTable
+	Private btnFullScreenExit As B4XView
+	Private btnFSBooks As B4XView
+	Private lblBooksFound As B4XView
+	
+	' BACKUP MANAGEMENT
+	
+	'Private btnFileChoose As B4XView
+	'Private txtBackupFolder As B4XView
+	
+	'Private btnDoBackup As B4XView
+	'Private btnChooseMySQLDump As B4XView
+	'Private txtMySQLDump As B4XView
+	'Private swNightlyBackup As B4XSwitch
+End Sub
+
+Sub AppStart (Form1 As Form, Args() As String)
+
+	'======================================================
+	' AppStart
+	'=============
+	' 0.1	09/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Initial Routine on Bootstrap.
+	' Read Settings from SchoolLibrary.ini
+	' Define and initialise each form
+	' Initialise Database connection to MySQL Database
+	'            which could be at localhost:3306 or remote
+	'
+	' Passed Variables
+	'=================
+	'
+	'	Form1		Form
+	'	Args		String 
+	'
+	' Returned Variables
+	'===================
+	'
+	' None
+	'
+	'Notes
+	'=====
+	'
+	' Once this routine initialses the system, then control is managed by the UI
+
+	'==============INITIALIZE STRING UTILITIES===================
+	
+	su.Initialize
+	
+	'==============INITIALIZE BACKUP TIMER ===================
+	
+	' tm.Initialize("tm", 24 * DateTime.TicksPerHour) ' DAILY BACKUP SELECTED
+	' tm.Initialize("tm", 300000) ' 5 min backup
+	' tm.Initialize("tm", 3600000) ' hourly backup
+	' tm.Enabled=True
+	
+	'==============READ SETTINGS FROM CONFIG FILE================
+	ReadSettings
+	
+	
+	'==========INITIALIZE VIEWS=================
+	
+	MainForm = Form1
+	MainForm.RootPane.LoadLayout("frmMainMenu") 
+	MainForm.SetFormStyle("UNDECORATED")
+	lblSchoolName.Text=cSchool	' title screen
+	
+	TakeOut.Initialize("TOform", 1024, 768)
+	TakeOut.RootPane.LoadLayout("frmTakeOut")
+	TakeOut.SetFormStyle("UNDECORATED")
+	
+	Settings.Initialize("Config", 1024, 768)
+	Settings.RootPane.LoadLayout("frmSettings")
+	Settings.SetFormStyle("UNDECORATED")
+	acSettings.LoadLayout("pnlActions", "Admin Actions")
+	acSettings.LoadLayout("pnlConfig", "System Config")
+	acSettings.LoadLayout("pnlBarcodes", "Barcode Management")
+	acSettings.LoadLayout("pnlBCU", "Bulk Class Update")
+	acSettings.LoadLayout("pnlBulkBookDelete", "Bulk Book Delete")
+	' acSettings.LoadLayout("pnlBackupMenu","Backup Management") 	' This is not currently working under school security policy
+																	' another solution is sought
+	acSettings.LoadLayout("pnlReportMenu","Reports")
+
+	
+	ReturnForm.Initialize("RTForm", 1024, 768)
+	ReturnForm.RootPane.LoadLayout("frmReturn")
+	ReturnForm.SetFormStyle("UNDECORATED")
+	
+	AdminPass.Initialize("AdminPass", 640, 480)
+	AdminPass.RootPane.LoadLayout("frmAdminPassword")
+	AdminPass.SetFormStyle("UNDECORATED")
+	
+	AddBook.Initialize("BookAdd", 1024, 768)
+	AddBook.RootPane.LoadLayout("frmAddBook")
+	AddBook.SetFormStyle("UNDECORATED")
+	
+	EditBook.Initialize("BookEdit", 1024, 768)
+	EditBook.RootPane.LoadLayout("frmEditBook")
+	EditBook.SetFormStyle("UNDECORATED")
+	
+	SearchBook.Initialize("BookSearch", 1024, 768)
+	SearchBook.RootPane.LoadLayout("frmSearchBook")
+	SearchBook.SetFormStyle("UNDECORATED")
+	
+	AdminSearch.Initialize("SearchAdmin", 1024, 768)
+	AdminSearch.RootPane.LoadLayout("frmSearchEdit")
+	AdminSearch.SetFormStyle("UNDECORATED")
+	
+	AddChild.Initialize("ChildAdd", 1024, 768)
+	AddChild.RootPane.LoadLayout("frmAddChild")
+	AddChild.SetFormStyle("UNDECORATED")
+	
+	EditChild.Initialize("EditChild", 1024, 768)
+	EditChild.RootPane.LoadLayout("frmEditChild")
+	EditChild.SetFormStyle("UNDECORATED")
+	
+	ChildSearch.Initialize("SearchChild", 1024, 768)
+	ChildSearch.RootPane.LoadLayout("frmChildSearch")
+	ChildSearch.SetFormStyle("UNDECORATED")
+	
+	AdminReturnBook.Initialize("AdminReturn", 1024, 768)
+	AdminReturnBook.RootPane.LoadLayout("frmAdminReturn")
+	AdminReturnBook.SetFormStyle("UNDECORATED")
+	
+	LevelSearch.Initialize("SearchLevel", 1024, 768)
+	LevelSearch.RootPane.LoadLayout("frmSearchLevel")
+	LevelSearch.SetFormStyle("UNDECORATED")
+	
+	Report.Initialize("ReportEvent", 850, 580)
+	Report.RootPane.LoadLayout("frmReport")
+	Report.SetFormStyle("UNDECORATED")
+	
+	Barcode.Initialize("BarcodeEvent", 345, 115)
+	Barcode.RootPane.LoadLayout("pnlBarcodeTemp")
+	Barcode.SetFormStyle("UNDECORATED")
+	
+	FSBooks.Initialize("BooksFS", 1024, 768)
+	FSBooks.RootPane.LoadLayout("frmFSBooks")
+	FSBooks.SetFormStyle("UNDECORATED")
+	
+	'=======================================================
+	'Initialize Lists
+	
+	userBookList.Initialize
+	delBookList.Initialize
+	
+	
+	'==========INITIATE DATABASE CONNECTION=================
+	SQL.InitializeAsync("MySQL", "com.mysql.jdbc.Driver", $"jdbc:mysql://${DBLocation}/${DBName}?useSSL=false"$, DBUsername, DBPassword)
+	
+	'All other interaction now guided by UI Interaction
+	
+	
+	'===========INITILIZE BACKUP OBJECT====================
+	Private DBackup As JavaObject
+	Dim Prpt As Map
+	Prpt.Initialize
+	Prpt.Put("DB_NAME", DBName)
+	Prpt.Put("DB_USERNAME", DBUsername)
+	Prpt.Put("DB_PASSWORD", DBPassword)
+	Prpt.Put("EMAIL_HOST", "**YOUR SMTP**")
+	Prpt.Put("EMAIL_PORT", "465")
+	Prpt.Put("EMAIL_USERNAME", "**YOUR SMTP LOGIN**")
+	Prpt.Put("EMAIL_PASSWORD", "**YOUR SMTP PASSWORD**")
+	Prpt.Put("EMAIL_FROM", "**NAME**")
+	Prpt.Put("EMAIL_TO", "**EMAIL**")
+	Prpt.Put("TEMP_DIR", "C:\Users\Public\Documents")
+	
+	DBackup.InitializeNewInstance("com.smattme.mysql-backup4j", Prpt)
+	
+	DBackup.RunMethod("export", Null)
+	
+End Sub
+
+'Sub tm_tick
+'	
+'	Log("Database Backup initiated " & DateTime.Now)
+'	RecordEvent("Database Backup initiated " & DateTime.Now)
+'	BackUpDatabase
+'	
+'End Sub
+
+Sub GetContext As JavaObject
+	Return GetBA.GetField("context")
+End Sub
+
+Sub GetBA As JavaObject
+	Dim jo As JavaObject
+	Dim cls As String = Me
+	cls = cls.SubString("class ".Length)
+	jo.InitializeStatic(cls)
+	Return jo.GetFieldJO("processBA")
+End Sub
+
+Sub ReadSettings
+	'=====================================================
+	' ReadSettings
+	'=============
+	'
+	' 0.1	11/11/2019			Initial
+	' 0.2   11/09/2021          Change settings location to Public Folder because of Network User Restriction
+	'	
+	' Purpose:
+	'=========
+	' Get error settings from SchoolLibrary.ini
+	' or create if not available
+	'
+
+	
+	'==============READ SETTINGS FROM CONFIG FILE================
+	'Check if the settings file exists, else create a new file
+	If File.Exists(constDataLocation, SettingsFile) Then
+		SettingsMap = File.ReadMap(constDataLocation, SettingsFile)
+	Else
+		'Create a new map and save
+		RecordEvent("NEW DATABASE SETTINGS CREATED")
+		SettingsMap = CreateMap ("IPAddress": "127.0.0.1:3306", "Username": "SchoolLibrary", _
+		                         "Password": "f3oHCjb7", "Database":"library", "SchoolName": _
+								 "DEFAULT School", "AdminPass": "161787401", _
+								 "MySQLDump": "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump.exe", _
+								 "BackupFolder": "C:\\Users\\Public\\Documents", _
+								 "NightlyBackups": 1)
+		File.WriteMap(constDataLocation, SettingsFile, SettingsMap)
+	End If
+
+	'==========READ SETTINGS FROM MAP=================
+	DBLocation=SettingsMap.Get("IPAddress")
+	DBName=SettingsMap.Get("Database")
+	DBUsername=SettingsMap.Get("Username")
+	DBPassword=SettingsMap.Get("Password")
+	cSchool=SettingsMap.Get("SchoolName")
+	DBAdminPass=SettingsMap.Get("AdminPass")
+	DBMySQL=SettingsMap.Get("MySQLDump")
+	DBBackupFolder=SettingsMap.Get("BackupFolder")
+	blNightlyBackups=SettingsMap.Get("NightlyBackups")
+		
+	RecordEvent("Settings loaded: Database = " & DBName)
+	RecordEvent("Settings loaded: IP = " & DBLocation)
+	RecordEvent("Settings loaded: User = " & DBUsername)
+	RecordEvent("Settings loaded: Password = " & DBPassword)
+	RecordEvent("Settings loaded: MySQLDump = " & DBMySQL)
+	RecordEvent("Settings loaded: BackupFolder = " & DBBackupFolder)
+	RecordEvent("Settings loaded: NightlyBackups = " & blNightlyBackups)
+	RecordEvent("Settings loaded: School = " & cSchool)
+	
+End Sub
+
+'=============================================
+' ERROR HANDLING AND HOUSEKEEPING MESSAGAGING
+'=============================================
+Sub Application_Error (Error As Exception, StackTrace As String) As Boolean
+	RecordEvent("ERROR " & StackTrace)
+	DialogMsg("ERROR " & StackTrace, MainForm.RootPane)
+	Return True
+End Sub
+
+'Sub RaiseErrorMsg(sMsg As String,RP As B4XView)
+'	'=====================================================
+'	' RaiseErrorMsg
+'	'=============
+'	'
+'	' 0.1	11/11/2019			Initial
+'	' 0.2	19/11/2019			Rework with B4XDialogs
+'	' 0.3   20/11/2019			Revert to classic Dialogs
+'	
+'	' Purpose:
+'	'=========
+'	' Show Error Messages to user
+'	'
+'	' Variables Passed
+'	'=================
+'	'
+'	' sMsg		String		Message to be displayed
+'	' RP		B4XView		The rootpane of which screen to display it on
+'	
+'
+'	Private Dialog As B4XDialog
+'	Private LongTextTemplate As B4XLongTextTemplate
+'	
+'	LongTextTemplate.Initialize
+'	LongTextTemplate.Text=sMsg
+'	
+'	Dialog.Initialize(RP)
+'	Dialog.Title="Error"
+'	Dialog.BlurBackground=True
+'	
+'	Dialog.ShowTemplate(LongTextTemplate, "OK", "", "")
+'
+'End Sub
+'
+'
+'Sub RaiseInfoMsg(sMsg As String, RP As B4XView)
+'	'=====================================================
+'	' RaiseInfoMsg
+'	'=============
+'	'
+'	' 0.1	11/11/2019			Initial
+'	' 0.2	19/11/2019			Rework with B4XDialogs
+'	' 0.3   20/11/2019			Revert to classic Dialogs
+'	
+'	' Purpose:
+'	'=========
+'	' Show Info Messages to user
+'	'
+'	' Variables Passed
+'	'=================
+'	'
+'	' sMsg		String		Message to be displayed
+'	' RP		B4XView		The rootpane of which screen to display it on
+'	
+'
+'	Private Dialog As B4XDialog
+'	Private LongTextTemplate As B4XLongTextTemplate
+'	
+'	LongTextTemplate.Initialize	
+'	LongTextTemplate.Text=sMsg
+'	
+'	Dialog.Initialize(RP)
+'	Dialog.Title="Information"
+'	Dialog.BlurBackground=True
+'	'Dialog.Resize(50,50)
+'	
+'	Dialog.ShowTemplate(LongTextTemplate, "OK", "", "")
+'	
+'	
+'End Sub
+
+
+Sub DialogMsg(sMsg As String, RP As B4XView)
+	
+	Private Dialog As B4XDialog
+	
+	Dialog.Initialize(RP)
+	'Dialog.BodyTextColor=0
+	'Dialog.BackgroundColor=255
+	
+	Dialog.Title=cSchool
+	Dialog.BlurBackground=True
+	Dialog.ButtonsFont = XUI.CreateDefaultFont(12)
+	
+	Wait For (Dialog.Show(sMsg, "OK", "", "")) Complete (Result As Int)
+	
+End Sub
+
+'=============================================
+' DATA AND SECURITY FUNCTIONS
+''=============================================
+
+
+
+'=============================================
+' ASYNC DATABASE CONNECTION
+''=============================================
+Sub MySQL_Ready (Success As Boolean)
+	'=====================================================
+	' MySQLReady
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	' Database connection is Asynchronous and Open
+	' Success is returned when connection is made. If
+	' it times out, then assume 
+	
+	If Success Then
+		RecordEvent("Connected to " & DBName)
+		lblMsg.Text="Status: Connected to database."
+				
+		'now show main menu
+		MainForm.Show
+		
+		'DialogMsg($"This is Version ${version} - Do not use in normal operation"$, MainForm.RootPane)
+		
+	Else
+		' show the settings page to update config
+		
+		Settings.Show
+		
+		txtSettingsSchoolName.Enabled=False
+		txtSettingsSchoolName.Enabled=False
+		txtSettingsAdminPassword.Textfield.Enabled=False  '
+		txtSettingsDatabase.Enabled=False
+		txtSettingsIPAddress.Enabled=False
+		txtSettingsPassword.Enabled=False
+		txtSettingsUsername.Enabled=False
+		
+	End If
+End Sub
+
+Sub MySQLRestart_Ready (Success As Boolean)
+	'=====================================================
+	' MySQLReady
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	' Database connection is Asynchronous and Open
+	' Success is returned when connection is made. If
+	' it times out, then assume 
+	
+	If Success Then
+		RecordEvent("Settings Change: Reconnected to " & DBName)
+		lblMsg.Text="Status: Reconnected to database."
+		
+		DialogMsg("System Settings Updated", Settings.RootPane)
+					
+	Else
+		' show the settings page to update config
+		
+		DialogMsg("There is a problem with these database settings, please check again", Settings.RootPane)
+		
+	End If
+End Sub
+'=============================================
+' MAIN FORM BUTTONS
+'=============================================
+Sub btnSearchBook_Click
+	'=====================================================
+	' btnSearchBook_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	'Initiate SeachBook Screen
+	'
+	MainForm.Close
+	SearchBook.Show
+	
+End Sub
+
+
+Sub btnExit_Click
+	'=====================================================
+	' btnExit_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Exit Application if user says yes
+	'
+
+	Private Dialog As B4XDialog
+	
+	Dialog.Initialize(MainForm.RootPane)
+	
+	Dialog.Title=cSchool
+	Dialog.BlurBackground=True
+
+	Wait For (Dialog.Show("Do you want to exit this Library System?", "YES", "NO", "")) Complete (Result As Int)
+	If Result = XUI.DialogResponse_Positive Then
+		SQL.Close
+		ExitApplication
+	End If
+	
+		
+End Sub
+
+
+Sub btnTakeOut_Click
+	'=====================================================
+	' btntakeOut_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Set initial UI Settings for TakeOut screen
+	
+	txtTOUserID.Text=""
+	txtTOBook.Text=""
+	lblTOUserCheck.Text=""
+	lblTOBookCheck.Text="Scan the barcode of the book you want to borrow and press the <Enter> key"
+	lblMyBooks.Visible=False
+	chkTOUserValid.Visible=False
+	chkTOBookValid.Visible=False
+	btnTONotThisUser.Visible=False
+	btnTONotThisBook.Visible=False
+	
+	MainForm.Close
+	TakeOut.Show
+	txtTOBook.RequestFocus
+	
+End Sub
+
+Sub btnSettings_Click
+	'=====================================================
+	' btnSettings_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Show Admin Authentication Screen
+	'
+	MainForm.Close
+	AdminPass.Show
+	txtAdminPassword.Text="" ' ensure it does not show last password
+	txtAdminPassword.Focused=True
+	
+End Sub
+
+Sub SettingsAuthenticated
+	'=====================================================
+	' SettingsAuthenticated
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' User has poassed amin validation, load Settings Screen and populate
+	' it with data
+	'
+	
+	txtSettingsSchoolName.Text=cSchool
+	txtSettingsIPAddress.Text=DBLocation
+	txtSettingsDatabase.Text=DBName
+	txtSettingsUsername.Text=DBUsername
+	txtSettingsPassword.Text=DBPassword
+	txtSettingsAdminPassword.Text=DBAdminPass
+	'txtMySQLDump.Text=DBMySQL
+	'txtBackupFolder.Text=DBBackupFolder
+	
+	'If blNightlyBackups=1 Then
+	'	swNightlyBackup.Value=True
+	'Else
+	'	swNightlyBackup.Value=False
+	'End If
+	
+	MainForm.Close
+	Settings.Show
+	
+	txtSettingsSchoolName.Enabled=False
+	txtSettingsSchoolName.Enabled=False
+	txtSettingsAdminPassword.Textfield.Enabled=False  '
+	txtSettingsDatabase.Enabled=False
+	txtSettingsIPAddress.Enabled=False
+	txtSettingsPassword.Enabled=False
+	txtSettingsUsername.Enabled=False
+	
+	
+End Sub
+
+
+Sub btnAddBook_Click
+	'=====================================================
+	' btnAddBook_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Show Addbook and complete comboboxes on AddBook
+	
+	Settings.Close
+	AddBook.Show
+	ChoiceBox(cbABCategory,"BOOKCATEGORY", "")
+	ChoiceBox(cbABOwner, "OWNER", "")
+	ChoiceBox(cbABStatus, "BOOKSTATUS", "")
+	
+	txtABOwner.Text="0"
+	txtABStatus.Text="0"
+	txtABCategory.Text="FICT"
+		
+	
+End Sub
+
+Sub btnRTBook_Click
+	
+	'=====================================================
+	' btnRTBook_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Set all UI elements on Return Book form and show it
+	
+	txtRTUserID.Text=""
+	txtRTBook.Text=""
+	lblRTBookCheck.Text=""
+	lblRTUserCheck.Text="Enter your ID and press the <Enter> key"
+	chkRTBookValid.Visible=False
+	chkRTUserValid.Visible=False
+	btnRTNotThisBook.Visible=False
+	btnRTNotThisUser.Visible=False
+	lblMyBooks.Visible=False
+	MainForm.Close
+	ReturnForm.Show
+	txtRTUserID.RequestFocus
+	
+End Sub
+
+'Sub ChoiceBoxOther As String
+'	
+'	'======================================================
+'	'ChoiceBoxIther
+'	'=============
+'	' 0.1	29/1/29			Initial
+'	
+'	'Purpose:
+'	'=========
+'	'
+'	'Experiment to provide pop up box if dropdown selects "Other"
+'	
+'	Private Dialog As B4XDialog
+'	Private InputTemplate As B4XInputTemplate
+'	
+'	InputTemplate.Initialize
+'	InputTemplate.Text="Input the Value"
+'	
+'	Dialog.Initialize(rp)
+'	Dialog.Title="Other Value"
+'	Dialog.BlurBackground=True
+'	'Dialog.Resize(50,50)
+'	
+'	Wait For (Dialog.ShowTemplate(LongTextTemplate, "OK", "", "Cancel")) Complete (Result As String)
+'	
+'	Return Result
+'
+'	
+'End Sub
+
+'Sub classList(cb As B4XComboBox)
+'
+'Private RS As ResultSet
+'Private lstItems As List
+'
+'lstItems.Initialize
+'
+'sQuery="SELECT DISTINCT(Class) FROM tbluser ORDER BY Class DESC"
+'	
+'RecordEvent("Generating Class List")
+'	
+'RS = SQL.ExecQuery(sQuery)
+'Do While RS.NextRow
+'	
+'	lstItems.Add(RS.GetString("Class"))
+'			
+'Loop
+'RS.Close
+'
+'cb.SetItems(lstItems)
+'	
+'
+'End Sub
+
+Sub ChoiceBox(cb As B4XComboBox, sCat As String, currentSetting	As String)
+	'======================================================
+	'ChoiceBox
+	'=============
+	' 0.1	19/11/2019			Initial
+	
+	'Purpose:
+	'=========
+	'
+	'Populate combo boxes drawn from tblconfig
+	'
+	'Passed Variables
+	'=================
+	'
+	'cb					B4XComboBox			Combobox object
+	'sCat				String				What category to draw from
+	'currentSetting		String				The current value that the combo box needs to be set to. Blank if nothing
+	'
+	'Declared Variables
+	'===================
+	' RS 				Resultset			Data returned from Query
+	' lstItems			List				List of data to be added after building to cmbobox
+	' intCount			int					counter
+	' intIndex			int					index marker
+	'
+	'Returned Variables
+	'===================
+	'
+	'None
+	'
+	'Notes
+	'=====
+	'
+	Private RS As ResultSet
+	Private lstItems As List
+	Private intCount As Int
+	Private intIndex As Int
+	
+	lstItems.Initialize
+
+	sQuery="SELECT * FROM tblconfig  WHERE Category=?"
+		
+	RecordEvent("Choicebox: " & sCat)
+		
+	RS = SQL.ExecQuery2(sQuery, Array As Object(sCat))
+	Do While RS.NextRow
+		
+		lstItems.Add(RS.GetString("CategoryValue"))
+		If RS.GetString("CategoryID")=currentSetting Then 
+			RecordEvent("Found " & currentSetting & " at Index " & intCount)
+			intIndex=intCount
+		End If
+		intCount=intCount+1
+		
+	Loop
+	RS.Close
+	
+	cb.SetItems(lstItems)	
+	cb.SelectedIndex=intIndex
+	
+End Sub
+
+Sub cbABCategory_SelectedIndexChanged(Index As Int)
+	'======================================================
+	'cbABCategory_SelectedIndexChanged
+	'=============
+	' 0.1	19/11/2019			Initial
+	
+	'Purpose:
+	'=========
+	'
+	'Populate the txtABCategory based on a selection from
+	' cbABCategory
+	'
+	'Passed Variables
+	'=================
+	'
+	'Index			int				the selected index (first is 0)
+	'
+	'Declared Variables
+	'===================
+	' RS 			Resultset		result of query
+	' strResult		string			the pulled index  value based on the selection
+	' selectedValue	string			the data used to reverse select the index
+	'
+	'Returned Variables
+	'===================
+	'
+	'None
+	'
+	'Notes
+	'=====
+	'
+	RecordEvent("ABCategory Index chosen is " & Index)
+	Private RS As ResultSet
+	Private strResult As String
+	Private selectedValue As String
+	
+	selectedValue=cbABCategory.GetItem(Index)
+	
+	sQuery="SELECT CategoryID FROM tblconfig  WHERE CategoryValue=?"
+
+	RS = SQL.ExecQuery2(sQuery, Array As Object(selectedValue))
+	
+	Do While RS.NextRow
+		strResult=RS.GetString("CategoryID")
+	Loop
+	RS.Close
+	
+'	If strResult="Other" Then strResult=ChoiceBoxOther
+	txtABCategory.Text=strResult
+	End Sub
+
+
+Sub cbEBCategory_SelectedIndexChanged(Index As Int)
+	'======================================================
+	'cbABCategory_SelectedIndexChanged
+	'=============
+	' 0.1	19/11/2019			Initial
+	
+	'Purpose:
+	'=========
+	'
+	'Populate the txtEBCategory based on a selection from
+	' cbEBCategory
+	'
+	'Passed Variables
+	'=================
+	'
+	'Index			int				the selected index (first is 0)
+	'
+	'Declared Variables
+	'===================
+	' RS 			Resultset		result of query
+	' strResult		string			the pulled index  value based on the selection
+	' selectValue	string			the visible data select, used to reverse select the index
+	'
+	'Returned Variables
+	'===================
+	'
+	'None
+	'
+	'Notes
+	'=====
+	'
+	RecordEvent("EBCategory Index chosen is " & Index)
+	Private RS As ResultSet
+	Private strResult As String
+	Private selectedValue As String
+	
+	selectedValue=cbEBCategory.GetItem(Index)
+	
+	sQuery="SELECT CategoryID FROM tblconfig  WHERE CategoryValue=?"
+
+	RS = SQL.ExecQuery2(sQuery, Array As Object(selectedValue))
+	
+	Do While RS.NextRow
+		strResult=RS.GetString("CategoryID")
+	Loop
+	RS.Close
+	
+	txtEBCategory.Text=strResult
+	
+End Sub
+
+Sub cbABOwner_SelectedIndexChanged(Index As Int)
+	'======================================================
+	'cbABOwner_SelectedIndexChanged
+	'=============
+	' 0.1	19/11/2019			Initial
+	
+	'Purpose:
+	'=========
+	'
+	'Populate the txtABOwner based on a selection from
+	' cbABOwner
+	'
+	'Passed Variables
+	'=================
+	'
+	'Index			int				the selected index (first is 0)
+	'
+	'Declared Variables
+	'===================
+	' RS 			Resultset		result of query
+	' strResult		string			the pulled index  value based on the selection
+	' selectValue	string			the visible data select, used to reverse select the index
+	'
+	'Returned Variables
+	'===================
+	'
+	'None
+	'
+	'Notes
+	'=====
+	'
+	RecordEvent("ABOwner Index chosen is " & Index)
+
+	Private RS As ResultSet
+	Private strResult As String
+	Private selectedValue As String
+	
+	selectedValue=cbABOwner.GetItem(Index)
+	
+	sQuery="SELECT CategoryID FROM tblconfig  WHERE CategoryValue=?"
+
+	RS = SQL.ExecQuery2(sQuery, Array As Object(selectedValue))
+	
+	Do While RS.NextRow
+		strResult=RS.GetString("CategoryID")
+	Loop
+	RS.Close
+	
+	txtABOwner.Text=strResult
+End Sub
+
+Sub cbEBOwner_SelectedIndexChanged(Index As Int)
+	'======================================================
+	'cbEBOwner_SelectedIndexChanged
+	'=============
+	' 0.1	19/11/2019			Initial
+	
+	'Purpose:
+	'=========
+	'
+	'Populate the txtEBOwner based on a selection from
+	' cbEBOwner
+	'
+	'Passed Variables
+	'=================
+	'
+	'Index			int				the selected index (first is 0)
+	'
+	'Declared Variables
+	'===================
+	' RS 			Resultset		result of query
+	' strResult		string			the pulled index  value based on the selection
+	' selectValue	string			the visible data select, used to reverse select the index
+	'
+	'Returned Variables
+	'===================
+	'
+	'None
+	'
+	'Notes
+	'=====
+	'
+	RecordEvent("Index chosen is " & Index)
+	Private RS As ResultSet
+	Private strResult As String
+	Private selectedValue As String
+	
+	selectedValue=cbEBOwner.GetItem(Index)
+	
+	sQuery="SELECT CategoryID FROM tblconfig  WHERE CategoryValue=?"
+
+	RS = SQL.ExecQuery2(sQuery, Array As Object(selectedValue))
+	
+	Do While RS.NextRow
+		strResult=RS.GetString("CategoryID")
+	Loop
+	RS.Close
+	
+	txtEBOwner.Text=strResult
+End Sub
+
+Sub cbABStatus_SelectedIndexChanged(Index As Int)
+	'======================================================
+	'cbABStatus_SelectedIndexChanged
+	'=============
+	' 0.1	19/11/2019			Initial
+	
+	'Purpose:
+	'=========
+	'
+	'Populate the txtABStatus based on a selection from
+	' cbABStatus
+	'
+	'Passed Variables
+	'=================
+	'
+	'Index			int				the selected index (first is 0)
+	'
+	'Declared Variables
+	'===================
+	' RS 			Resultset		result of query
+	' strResult		string			the pulled index  value based on the selection
+	' selectValue	string			the visible data select, used to reverse select the index
+	'
+	'Returned Variables
+	'===================
+	'
+	'None
+	'
+	'Notes
+	'=====
+	'
+	RecordEvent("ABStatus Index chosen is " & Index)
+	Private RS As ResultSet
+	Private strResult As String
+	Private selectedValue As String
+	
+	selectedValue=cbABStatus.GetItem(Index)
+	
+	sQuery="SELECT CategoryID FROM tblconfig  WHERE CategoryValue=?"
+
+	RS = SQL.ExecQuery2(sQuery, Array As Object(selectedValue))
+	
+	Do While RS.NextRow
+		strResult=RS.GetString("CategoryID")
+	Loop
+	RS.Close
+	
+	txtABStatus.Text=strResult
+End Sub
+
+Sub cbEBStatus_SelectedIndexChanged(Index As Int)
+	'======================================================
+	'cbEBStatus_SelectedIndexChanged
+	'=============
+	' 0.1	19/11/2019			Initial
+	
+	'Purpose:
+	'=========
+	'
+	'Populate the txtEBStatus based on a selection from
+	' cbEBStatus
+	'
+	'Passed Variables
+	'=================
+	'
+	'Index			int				the selected index (first is 0)
+	'
+	'Declared Variables
+	'===================
+	' RS 			Resultset		result of query
+	' strResult		string			the pulled index  value based on the selection
+	' selectValue	string			the visible data select, used to reverse select the index
+	'
+	'Returned Variables
+	'===================
+	'
+	'None
+	'
+	'Notes
+	'=====
+	'
+	RecordEvent("EBStatus Index chosen is " & Index)
+	Private RS As ResultSet
+	Private strResult As String
+	Private selectedValue As String
+	
+	selectedValue=cbEBStatus.GetItem(Index)
+	
+	sQuery="SELECT CategoryID FROM tblconfig  WHERE CategoryValue=?"
+
+	RS = SQL.ExecQuery2(sQuery, Array As Object(selectedValue))
+	Do While RS.NextRow
+		strResult=RS.GetString("CategoryID")
+	Loop
+	RS.Close
+	
+	txtEBStatus.Text=strResult
+End Sub
+'=============================================
+' TAKE OUT FORM BUTTONS
+'
+'=============================================
+
+Sub btnTOExit_Click
+	'=====================================================
+	' btnTOExit_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Reset all UI elements on Take Out Book form and return to Main Menu
+	
+	txtTOUserID.Enabled=True
+	txtTOBook.Enabled=True
+	txtTOUserID.Text=""
+	txtTOBook.Text=""
+	lblMyBooks.Visible=False
+	chkTOBookValid.Visible=False
+	chkTOUserValid.Visible=False
+	btnTONotThisUser.Visible=False
+	btnTONotThisBook.Visible=False
+	lblTOUserCheck.Text=""
+	lblTOBookCheck.Text=""
+	TakeOut.Close
+	MainForm.Show
+	
+End Sub
+
+Sub btnTObookout_Click
+	'=====================================================
+	' btnTObookout_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Validate that the Take Out book criteria has been both validated
+	' and pass the data to the bookout routine
+	
+	If (chkTOUserValid.Visible=False) Or (chkTOBookValid.Visible=False) Then
+		DialogMsg("Some Information appears to be missing. You need two green ticks. Scan both your ID and the Book Barcode", TakeOut.RootPane)
+	Else
+	
+		bookOut(txtTOUserID.Text, txtTOBook.Text)
+		
+		' clear the validation and book data
+		' so user can take out a second book.
+		
+		txtTOBook.Text=""
+		txtTOBook.Enabled=True
+		chkTOBookValid.Visible=False
+		btnTONotThisBook.Visible=False
+				
+	End If
+	
+End Sub
+
+'=============================================
+' RETURN FORM BUTTONS
+'
+'=============================================
+
+Sub btnRTExit_Click
+	
+	'=====================================================
+	' btnRTExit_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Reset all UI elements on Return Book form and return to Main Menu
+	
+	txtRTUserID.Enabled=True
+	txtRTBook.Enabled=True
+	txtRTUserID.Text=""
+	txtRTBook.Text=""
+	tblVBorrowedReturn.Clear
+	lblMyBooks.Visible=False
+	chkRTBookValid.Visible=False
+	chkRTUserValid.Visible=False
+	btnRTNotThisUser.Visible=False
+	btnRTNotThisBook.Visible=False
+	lblRTBookCheck.Text=""
+	lblRTUserCheck.Text=""
+	ReturnForm.Close
+	MainForm.Show
+	
+End Sub
+
+Sub btnRTbookout_Click
+	'=====================================================
+	' btnRTbookout_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	' 0.2	21/11/2019			Remove checks for UserID to return which is irrelevant.
+	'
+	' Purpose:
+	'=========
+	'
+	' If both fields have been validated then mark book out
+	' otherwise diplay error message
+	
+	If ((chkRTBookValid.Visible=False) Or (chkRTUserValid.Visible=False)) Then
+		DialogMsg("Some information is missing. Click in the box and scan the appropriate Barcode", ReturnForm.RootPane)
+	Else
+		bookBack(txtRTUserID.Text,txtRTBook.Text)
+		
+		txtRTBook.Text=""
+		txtRTBook.Enabled=True
+		chkRTBookValid.Visible=False
+		btnRTNotThisBook.Visible=False
+		txtRTBook.RequestFocus
+	End If
+	
+End Sub
+
+'=============================================
+' SETTINGS UP BUTTONS AND OPERATIONS
+'
+'=============================================
+
+Sub btnSettingsExit_Click
+	'=====================================================
+	' btnSettingsExit_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Confirm and then update Config settings
+	
+	'clear all textfields on settings form
+	tblbookList.Clear
+	txtBarcodeDelete.Text=""
+	tvBCUUsers.Items.Clear
+	txtBCUFrom.Text=""
+	txtBCUTo.Text=""
+	
+	
+		Settings.Close
+		MainForm.Show
+
+	
+End Sub
+
+Sub btnAdminReturn_Click
+	'=====================================================
+	' btnAdminReturn_Click
+	'=============
+	'
+	' 0.1	08/01/2020			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Fired when user clicks on Return Book in Settings
+	
+	Settings.Close
+	
+	btnARTNotThisBook.Visible=False
+	chkARTBookValid.Visible=False
+		
+	AdminReturnBook.Show
+		
+End Sub
+
+Sub btnAddChild_Click
+	'=====================================================
+	' btnAddChild_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Fired when user clicks on Add Child button in Settings
+	
+	Settings.Close
+	AddChild.ShowAndWait
+	
+End Sub
+
+Sub btnEditChild_Click
+	'=====================================================
+	' btnSettingsCancel_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Fired when user clicks on Edit Child button in Settings
+	
+	Settings.Close
+	ChildSearch.Show
+	
+End Sub
+
+
+Sub btnSettingsCancel_Click
+	'=====================================================
+	' btnSettingsCancel_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	' 0.2	20/11/2-19			change to B4xDialog
+	'
+	' Purpose:
+	'=========
+	'
+	' Fired when user clicks on Cancel button in Settings
+	
+	Private Dialog As B4XDialog
+	
+	Dialog.Initialize(Settings.RootPane)
+	
+	Dialog.Title=cSchool
+	Dialog.BlurBackground=True
+
+	Wait For (Dialog.Show("Do you want to exit without updating the Configuration?", "YES", "NO", "")) Complete (Result As Int)
+	If Result = XUI.DialogResponse_Positive Then
+		Settings.Close
+		MainForm.Show
+	End If
+	
+End Sub
+
+Sub btnAdminSearch_Click
+	'=====================================================
+	' btnAdminSearchClick
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' edit book search
+	
+	Settings.Close
+	AdminSearch.Show
+	
+End Sub
+
+Sub imgLock_MouseClicked (EventData As MouseEvent)
+	'=====================================================
+	' imgLock_MouseClicked
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	' Fired when user clicks on the imgLock image
+	' Enable configuration settings fields
+	
+	If txtSettingsSchoolName.Enabled=False Then
+		
+		lblLockStatus.Text="Unlocked"
+		imgLock.SetBitmap(XUI.LoadBitmapResize(File.DirAssets, "unlock.png", imgLock.Width, imgLock.Height,True))
+		txtSettingsSchoolName.Enabled=True
+		txtSettingsDatabase.Enabled=True
+		txtSettingsIPAddress.Enabled=True
+		txtSettingsPassword.Enabled=True
+		txtSettingsUsername.Enabled=True
+		txtSettingsAdminPassword.Textfield.Enabled=True
+		
+	Else
+		lblLockStatus.Text="Locked"
+		imgLock.SetBitmap(XUI.LoadBitmapResize(File.DirAssets, "lock.png", imgLock.Width, imgLock.Height,True))
+		txtSettingsSchoolName.Enabled=False
+		txtSettingsSchoolName.Enabled=False
+		txtSettingsAdminPassword.Textfield.Enabled=False  '
+		txtSettingsDatabase.Enabled=False
+		txtSettingsIPAddress.Enabled=False
+		txtSettingsPassword.Enabled=False
+		txtSettingsUsername.Enabled=False
+		
+		SaveSettings
+		
+	End If
+	
+End Sub
+
+'=============================================
+' RETURN UI BUTTONS AND OPERATIONS
+'=============================================
+
+
+
+
+Sub btnRTUserValidate_Click
+	'=====================================================	'=====================================================
+	' btnRTUserValidate_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	' 
+	'Enabkes the user to confiurm the right user has been entered
+	'puts a big toick on screen
+	'bookin cannot occur without ticks for both user and book
+	
+	
+	If txtRTUserID.Text.Length>0 Then
+		
+		Private strResult As String
+		
+		strResult=getUserName(txtRTUserID.text)
+		
+		If strResult.Length>0 Then
+			lblRTUserCheck.Text= strResult
+			'txtRTUserID.Enabled=False
+			chkRTUserValid.Visible=True
+			btnRTNotThisUser.Visible=True
+			lblRTBookCheck.Text="Scan the barcode of the book you want to return " & _
+			                     "or Select it from the list below And then press the <enter> key"
+			
+			'================SHOW LIST OF BOOKS TAKEN OUT BY USER=============
+			lblMyBooks.Visible=True
+			booksOutbyUser(txtRTUserID.text, tblVBorrowedReturn)
+			'where next to send focus
+			If chkRTBookValid.Visible = False Then
+				txtRTBook.RequestFocus
+			Else
+				btnRTbookout.RequestFocus
+			End If
+		Else
+			DialogMsg("User ID Not Found - Check your ID number from the Book or your Library Card", ReturnForm.RootPane)
+			txtRTUserID.Text=""
+			txtRTUserID.Enabled=True
+			chkRTUserValid.Visible=False
+			txtRTUserID.RequestFocus
+		End If
+	End If
+End Sub
+
+'=====================================================	
+	' Text Action Events 
+	'=============
+	'
+	' 0.1	20/1/2020			Initialk
+	'
+	' Purpose:
+	'=========
+	' Enable pressing Enter on a scanned book or ID
+	' To simulate pressing the validate key
+
+Sub txtRTBook_Action
+	btnRTBookValidate_Click
+End Sub
+
+Sub txtRTUserID_Action
+	btnRTUserValidate_Click
+End Sub
+
+Sub txtTOBook_Action
+	btnTOBookValidate_Click
+End Sub
+
+Sub txtTOUserID_Action
+	btnTOUserValidate_Click
+End Sub
+
+'=====================================================
+
+Sub btnTOUserValidate_Click
+	'=====================================================	'=====================================================
+	' btnTOUserValidate_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	'Enabkes the user to confiurm the right user has been entered
+	'puts a big toick on screen
+	'bookout cannot occur without ticks for both user and book
+	' have been validated
+	
+'=========VALIDITY CHECKK========================
+If txtTOUserID.Text.Length>0 Then
+		
+		Private strResult As String
+		
+		strResult=getUserName(txtTOUserID.text)
+		
+		If strResult.Length>0 Then 
+			lblTOUserCheck.Text= strResult
+			'txtTOUserID.Enabled=False
+			chkTOUserValid.Visible=True
+			btnTONotThisUser.Visible=True
+			
+			'================SHOW LIST OF BOOKS TAKEN OUT BY USER=============
+			lblMyBooks.Visible=True
+			booksOutbyUser(txtTOUserID.text, tblVBorrowed)
+			'where next to send focus
+			If chkTOBookValid.Visible = False Then 
+					txtTOBook.RequestFocus
+			Else
+					btnTObookout.RequestFocus
+			End If
+		Else
+			DialogMsg("User ID Not Found - Check your ID number from the Book or your Library Card", TakeOut.RootPane)
+			txtTOUserID.Text=""
+			txtTOUserID.Enabled=True
+			chkTOUserValid.Visible=False
+			txtTOUserID.RequestFocus
+		End If
+End If
+	
+	
+End Sub
+
+Sub btnRTBookValidate_Click
+	'=====================================================	
+	' btnRTUserValidate_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	'Enabkes the user to confiurm the right book has been entered
+	'puts a big toick on screen
+	'bookin cannot occur without ticks for both user and book
+	
+	Private intBookOwner As Int
+	Private strBookOwner As String
+	
+	If txtRTBook.Text.Length>0 Then
+		
+		
+	Private strResult As String
+	
+	'if user not set yet then make -1 so as not to confuse it with no borrow	
+	If txtRTUserID.Text="" Then txtRTUserID.Text=-1
+		
+	strResult = getBookDetails(txtRTBook.Text)
+		
+	intBookOwner=getwhoHasBook(txtRTBook.Text)
+	strBookOwner=getUserName(intBookOwner)
+	
+
+	'double check the right user is returning it
+	If intBookOwner<>txtRTUserID.Text Then
+		
+									If intBookOwner=0 Then
+										RecordEvent("Book not out. Cannot Return")
+										DialogMsg("That book is recorded as not currently out to anyone.", ReturnForm.RootPane)
+									Else
+										RecordEvent("Book out to " & strBookOwner)
+										DialogMsg("That book is recorded as out to " & strBookOwner & ". You need to ask them to return it.", ReturnForm.RootPane)
+									End If
+									
+		txtRTBook.Text=""
+		txtRTBook.RequestFocus	
+	Else
+		
+									If strResult.Length=0 Then
+										DialogMsg("That book has not been found", TakeOut.RootPane)
+											txtRTBook.Text=""
+											txtRTBook.RequestFocus
+										Else
+											lblRTBookCheck.Text=strResult
+											chkRTBookValid.Visible=True
+											'txtRTBook.Enabled=False
+											txtRTUserID.RequestFocus
+											btnRTNotThisBook.Visible=True
+											lblRTUserCheck.Text="Scan your own barcode or enter your ID and press the <Enter> key"
+									End If ' book not found
+			
+	End If   ' book out to someone else
+	
+	End If  ' text box empty
+	
+	' if not set yet then zero for input
+	If txtRTUserID.Text=-1 Then txtRTUserID.Text=""
+	
+End Sub
+
+Sub btnTOBookValidate_Click
+	'=====================================================
+	' btnTOUserValidate_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	'Enabkes the user to confiurm the right book has been entered
+	'puts a big toick on screen
+	'bookout cannot occur without ticks for both user and book
+		
+If txtTOBook.Text.Length>0 Then
+		
+		Private strResult As String
+		
+		If txtTOBook.Text.Length=10 Then
+			strResult=getBookDetailsFromISBN(txtTOBook.Text)
+		Else
+			strResult = getBookDetails(txtTOBook.Text)
+		End If
+		
+		If strResult.Length=0 Then
+			DialogMsg("That book has not been found - did you scan the number on the INSIDE of the book?", TakeOut.RootPane)
+			txtTOBook.Text=""
+			txtTOBook.RequestFocus
+		Else
+			lblTOBookCheck.Text=strResult
+			'=========now check this book is not already out========================
+			Private isOut As Int
+			
+			isOut=getIsBorrowed(txtTOBook.Text)
+			
+			If isOut<>0 Then
+				txtTOBook.RequestFocus
+				DialogMsg("That book already appears to be out to " & getUserName(isOut), TakeOut.RootPane)
+				lblTOBookCheck.Text="Scan the barcode of the book you want to borrow and press the <Enter> key"
+				txtTOBook.Text=""
+				chkTOBookValid.Visible=False
+				txtTOBook.Enabled=True
+				txtTOBook.RequestFocus
+				
+			Else
+				lblTOBookCheck.Text= strResult
+				'txtTOBook.Enabled=False
+				chkTOBookValid.Visible=True
+				txtTOUserID.RequestFocus
+				btnTONotThisBook.Visible=True
+				txtTOUserID.RequestFocus
+				lblTOUserCheck.Text="Enter your ID and press the <Enter> key"
+			End If
+		
+		End If
+	
+End If
+	
+End Sub
+
+Sub btnTONotThisUser_Click
+	'=====================================================
+	' btnTONoteThisBook_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' If the user clicks Not This User on the Take Out book form
+	' then clear user input and ask again
+	
+	txtTOUserID.Text=""
+	txtTOUserID.Enabled=True
+	chkTOUserValid.Visible=False
+	btnTONotThisUser.Visible=False
+	txtTOUserID.RequestFocus
+	lblTOUserCheck.Text=""
+	
+End Sub
+
+Sub btnRTNotThisUser_Click
+	'=====================================================
+	' btnRTNoteThisBook_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' If the user clicks Not This User on the Return book form
+	' then clear user input and ask again
+	
+	txtRTUserID.Text=""
+	txtRTUserID.Enabled=True
+	chkRTUserValid.Visible=False
+	btnRTNotThisUser.Visible=False
+	txtRTUserID.RequestFocus
+	lblRTBookCheck.Text=""
+	tblVBorrowedReturn.Clear
+	
+End Sub
+
+Sub btnTONotThisBook_Click
+	'======================================================
+	' btnTONoteThisBook_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' If the user clicks Not This Book on the Take Out book form
+	' then clear book input and ask again
+	
+	txtTOBook.Text=""
+	chkTOBookValid.Visible=False
+	btnTONotThisBook.Visible=False
+	txtTOBook.Enabled=True
+	txtTOBook.RequestFocus
+	lblRTBookCheck.Text=""
+End Sub
+
+
+Sub btnRTNotThisBook_Click
+	
+	'======================================================
+	' btnRTNoteThisBook_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' If the user clicks Not This Book on the Return book form
+	' then clear book input and ask again
+	
+	
+	txtRTBook.Text=""
+	chkRTBookValid.Visible=False
+	btnRTNotThisBook.Visible=False
+	txtRTBook.Enabled=True
+	txtRTBook.RequestFocus
+	lblRTBookCheck.Text=""
+End Sub
+
+
+'=============================================
+' AUTHENTICATE PASSWORD
+'
+'=============================================
+
+
+Sub txtAdminPassword_EnterPressed
+	
+	'======================================================
+	' txtAdminPassword_EnterPressed
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Event fired by user pressing return or clicking tick on Password entry
+	' If match with loaded password then move to setting screen
+	' otherwise close and return to Main Menu
+	
+	RecordEvent("Admin Password submitted is " & txtAdminPassword.Text)
+	
+	If txtAdminPassword.Text=DBAdminPass Then
+		AdminPass.Close
+		Settings.Show
+		SettingsAuthenticated
+	Else
+		AdminPass.Close
+		MainForm.Show
+	End If
+	
+End Sub
+
+
+Sub btnAuthCancel_Click
+	'======================================================
+	' btnAuthCancel_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Event fired by Admin Password Cancel Button.
+	' and return to Main Screen
+	
+	AdminPass.Close
+	MainForm.Show
+	
+End Sub
+
+
+'=============================================
+' BORROW BOOK
+'
+'=============================================
+
+Sub bookOut(uid As Long, bookid As Long)
+	'=====================================================
+	' bookout
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	' 0.2   17/1/20             Check if Not Staff and Limit books to 2
+	' 0.3   06/09/22			Close window fully on confirmation of book
+	'
+	' Purpose:
+	'=========
+	'
+	'Mark the book as out in the tblborrow and also in the book record
+	'
+	'Passed variables
+	'=================
+	' uid 			int				user id
+	'bookid			Long			book id
+
+Private sQuery As String
+
+RecordEvent("User " & uid & " has " &  getHowManyBooks(uid) & " books and staff = " & IsStaff(uid))
+
+If (getHowManyBooks(uid) >= 2) And (IsStaff(uid)=False) Then
+	
+	DialogMsg("You already have the maximum of two books out. You must return one before you continue.", TakeOut.RootPane)
+	
+Else
+	
+If IsNumber(uid) And IsNumber(bookid) Then
+	
+	RecordEvent("BookOut: " & bookid & " to " & uid)
+
+	sQuery="INSERT INTO tblborrow (User, Book, DateOut, Status) VALUES (?, ?, NOW(), 1);" 
+			
+	SQL.ExecNonQuery2(sQuery, Array As Object(uid, bookid))
+	RecordEvent("Added Borrow of book " & bookid & " to " & uid)
+	
+	
+	' now mark the book as borrowed
+	sQuery="UPDATE tblbook SET BookStatus=1, OutTo=? WHERE Babcockcode=?;" 
+			
+		RecordEvent("UPDATE tblbook SET BookStatus=1, OutTo=? WHERE BabcockCode=?;")
+	
+	SQL.ExecNonQuery2(sQuery, Array As Object(uid, bookid))
+	RecordEvent("Marked Book " & bookid & " as borrowed")
+	
+	DialogMsg(getBookDetails(bookid) & Chr(13) & " has been added to your borrowed books.", TakeOut.RootPane)
+	
+	txtTOBook.Text=""
+	lblTOBookCheck.Text=""
+	txtTOUserID.Text=""
+	lblTOUserCheck.Text=""
+	chkTOBookValid.Visible=False
+	chkTOUserValid.Visible=False
+	btnTONotThisBook.Visible=False
+	btnTONotThisUser.Visible=False
+	
+	'update the books out list for the given user
+	'booksOutbyUser(uid, tblVBorrowed)
+	tblVBorrowed.Clear
+	
+		End If ' IsNumber
+
+
+	End If ' too many books
+	
+	'now close window
+	'btnTOExit_Click
+	
+	txtTOBook.RequestFocus
+	
+		
+End Sub
+
+'=============================================
+' RETURN BOOK
+'=============================================
+
+Sub bookBack(intUid As Int, bookid As Long)
+	'=====================================================
+	' bookback
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	' 0.2	21/11/2019			
+	'
+	' Purpose:
+	'=========
+	'
+	'Mark the book as back in in the tblborrow and also in the book record
+	'
+	'Passed variables
+	'=================
+	' uid 			int				user id - 
+	'bookid			Long			book id
+	
+	
+If IsNumber(bookid) And IsNumber(intUid) Then 
+	
+	RecordEvent("About to return " & bookid)
+	
+		sQuery="UPDATE tblborrow SET DateIn=NOW(), Status=0 WHERE Status=1 AND Book=?;" 
+				
+		RecordEvent("UPDATE tblborrow SET DateIn=NOW(), Status=0 WHERE Status=1 AND Book=" & bookid )
+		
+		SQL.ExecNonQuery2(sQuery, Array As Object(bookid))
+		RecordEvent("Returned " & bookid & " from " & intUid)
+		
+		
+		' now mark the book as returned
+		sQuery="UPDATE tblbook SET BookStatus=0, OutTo=0 WHERE ID=?;" 
+				
+		RecordEvent("UPDATE tblbook SET BookStatus=0, OutTo=0 WHERE ID=" & bookid & ";")
+		
+		SQL.ExecNonQuery2(sQuery, Array As Object(bookid))
+		RecordEvent("Marked Book " & bookid & " as returned")
+		
+		txtRTBook.Text=""
+		lblRTBookCheck.Text=""
+		txtRTUserID.Text=""
+		lblRTUserCheck.Text=""
+		chkRTBookValid.Visible=False
+		chkRTUserValid.Visible=False
+		btnRTNotThisBook.Visible=False
+		btnRTNotThisUser.Visible=False
+
+		
+		DialogMsg(getBookDetails(bookid) & " has been returned", ReturnForm.RootPane)
+		
+		'update list of borrowed books
+		'booksOutbyUser(intUid,tblVBorrowedReturn)
+		tblVBorrowedReturn.Clear
+		txtRTBook.RequestFocus
+	
+End If ' IsNumber
+
+	'Now close window
+	'btnRTExit_Click
+	
+	txtRTBook.RequestFocus
+		
+End Sub
+'=============================================
+' WHAT BOOKS DOES A USER HAVE?
+'=============================================
+
+Sub booksOutbyUser(uid As Int, tblView As B4XTable)
+	'=====================================================
+	' booksoutbyuser
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	'Rteurn list of books and populate passed tableview with that data
+	'
+	'Passed variables
+	'=================
+	' uid 			int				user id
+	' tblView		TableView		Passed tableview to upodate
+	
+	If IsNumber(uid) Then  ' continue
+
+		'Zero the list
+		tblView.Clear
+		userBookList.Clear
+		
+		tblView.AddColumn("Book", tblView.COLUMN_TYPE_TEXT)
+		tblView.AddColumn("Title", tblView.COLUMN_TYPE_TEXT)
+		tblView.AddColumn("Author", tblView.COLUMN_TYPE_TEXT)
+		tblView.AddColumn("Date Out", tblView.COLUMN_TYPE_DATE)
+
+		populateCurrentUserBookList(uid)
+		tblView.SetData(userBookList)
+
+	End If ' IsNumber
+	
+End Sub
+
+'=============================================
+' IS BOOK ALREADY OUT?
+'=============================================
+
+Sub getIsBorrowed(bookid As Long) As Int
+	'=====================================================
+	' getIsBorrowed
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	'return whether a given book is aleady out
+	'
+	'Passed variables
+	'=================
+	' uid 			int				user id
+	'
+	'Returned Variables
+	'==================
+	'returns book status if available
+	'
+If IsNumber(bookid) Then
+	
+	Private RS As ResultSet
+	Private intResult As Int
+
+			sQuery="SELECT BookStatus FROM tblbook  WHERE BabcockCode=?;"
+			
+			RecordEvent("GetIsBorrowed: " & "SELECT BookStatus FROM tblbook  WHERE BabcockCode=" & bookid)
+			
+			RS = SQL.ExecQuery2(sQuery, Array As Object(bookid))
+			Do While RS.NextRow
+				intResult=RS.GetInt("BookStatus")
+			Loop
+			RS.Close
+			
+			If intResult>0 Then
+				Return getwhoHasBook(bookid)
+			Else
+				Return intResult	' if zero then book is available, otherwise show it is out to user intresult
+			End If
+		
+Else
+			Return 0	
+End If ' Isnumber
+
+End Sub
+
+'=============================================
+' NAME WHO HAS BOOK
+'=============================================
+
+Sub getwhoHasBook(bookid As Long) As Int
+	'=====================================================
+	' getwhoHasBook
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	' 0.2   17/1/20				Amend to be based on BabcockCode
+	'
+	' Purpose:
+	'=========
+	'
+	'return whether a given book is aleady out
+	'
+	'Passed variables
+	'=================
+	' bookid 			int				book id
+	'
+	'Returned Variables
+	'==================
+	'returns integer of id of user who had book or 0 if no-one has
+	'
+If IsNumber(bookid) Then 
+		
+	Private RS As ResultSet
+	Private intResult As Int = 0
+
+	sQuery="SELECT User FROM tblborrow  WHERE Status=1 AND Book=?;"
+		
+	RecordEvent("SELECT User FROM tblborrow  WHERE Status=1 AND Book=" & bookid)
+		
+	RS = SQL.ExecQuery2(sQuery, Array As Object(bookid))
+	Do While RS.NextRow
+		intResult=RS.GetInt("User")
+	Loop
+	RS.Close
+	
+	RecordEvent("Who has book: " & bookid & " is " & intResult)
+	
+	Return intResult
+
+Else
+
+	Return 0 ' if error, just return no books answer	
+
+End If
+	
+End Sub
+
+
+'=============================================
+' Add Book UI
+'=============================================
+
+Sub btnABExit_Click
+	'=====================================================
+	' btnABExit_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	'Validate, Add Book with paraetarised query, Close Form
+	'
+	'
+	'Declared Variables
+	'==================
+	'
+	' sQuery 		string			SQL quesry
+	'
+	'Save book Added
+	Private errorflag As Boolean=True
+	
+	'Validate
+	
+	If txtABAuthor.Text.Length=0 Then errorflag=False
+	If txtABTitle.Text.Length=0 Then errorflag=False
+	If txtABBabcockCode.Text.Length=0 Then errorflag=False
+	
+	
+	If errorflag=True Then
+	
+			'If passes now update
+				Private sQuery As String
+						
+				
+			sQuery="INSERT INTO tblbook (Title, Author, Category, " & _
+			        "ReadingLevel, ISBN, BabcockCode, Owner, Media, BookStatus, ARQuiz, Blurb, DeweyRef) " & _
+					"VALUES (?,?,?,?,?,?,?,?,?,?,?,?)" 
+
+		RecordEvent(sQuery)		
+		SQL.ExecNonQuery2(sQuery, Array As Object(txtABTitle.Text, txtABAuthor.Text, _
+												  txtABCategory.Text,txtABReadingLevel.Text, _
+												  txtABISBN.Text, txtABBabcockCode.Text, _
+												  txtABOwner.Text, txtABMedia.Text, _
+												  txtABStatus.Text, txtABARQuiz.Text, txtBlurb.Text, txtABDeweyRef.Text))												  
+		RecordEvent("Book: "  & txtABTitle.Text & " Added")
+		DialogMsg(txtABTitle.Text & " added to System", Settings.RootPane)
+			
+			txtABTitle.Text=""
+			txtABAuthor.Text=""
+			txtABCategory.Text=""	
+			txtABReadingLevel.Text=""
+			txtABISBN.Text=""
+			txtABBabcockCode.Text=""
+			txtABOwner.Text=""
+			txtABMedia.Text=""
+			txtABStatus.Text=""
+			txtABARQuiz.Text=""
+			txtBlurb.Text=""
+			txtABDeweyRef.Text=""
+			
+		AddBook.Close
+		Settings.Show
+					
+	Else ' validation fails
+	
+		RecordEvent("AddBook Validation has failed, check title, author, babcockcode")
+		DialogMsg("Some important information is missing" & Chr(13) & "so the book cannot be saved." & Chr(13) & "Please check.", AddBook.RootPane)
+		
+	
+	End If
+	
+
+
+End Sub
+
+
+Sub btnABCancel_Click
+	'======================================================
+	' btnABCancel_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Event fired by AddBook Cancel Button.
+	' and return to Settings Screen
+				
+	AddBook.Close
+	Settings.Show
+	
+End Sub
+
+Sub btnEBCancel_Click
+	'======================================================
+	' btnEBCancel_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Event fired by EditBook Cancel Button.
+	' and return to Settings Screen
+				
+	EditBook.Close
+	Settings.Show
+	
+End Sub
+
+Sub btnEBExit_Click
+	'=====================================================
+	' btnEBExit_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	'Validate, Update Book with paraetarised query, Close Form
+	'
+	'
+	'Declared Variables
+	'==================
+	'
+	' sQuery 		string			SQL quesry
+	'
+	Private sQuery As String
+			
+	sQuery="UPDATE tblbook SET " & _
+	        "Title=?, " & _																	'1
+			"Author=?, " & _																'2
+			"Category=?, " & _																'3
+			"ReadingLevel=?, " & _															'4								
+			"ISBN=?, " & _																	'5
+			"BabcockCode=?, " & _															'6
+			"Owner=?, " & _																	'7
+			"Media=?, " & _																	'8
+			"BookStatus=?, " & _															'9
+			"ARQuiz=?, "&  _																'10
+			"Blurb=?, "	& _																	'11
+			"DeweyRef=? "	& _																'12
+			" WHERE id=?;"																	'13
+	
+
+	RecordEvent(sQuery)
+	SQL.ExecNonQuery2(sQuery, Array As Object (	txtEBTitle.Text, _				' 1
+												txtEBAuthor.Text, _				' 2
+												txtEBCategory.Text, _			' 3
+												txtEBReadingLevel.Text, _		' 4	
+												txtEBISBN.Text, _				' 5
+												txtEBBabcockCode.Text, _   		'6
+												txtEBOwner.Text, _				' 7
+												txtEBMedia.Text, _				' 8
+												txtEBStatus.Text, _				' 9
+												txtEBARQuiz.Text, _				' 10
+												txtEBBlurb.Text, _				'11
+												txtEBDeweyRef.Text, _			'12
+												txtEBID.Text))					' 13
+		
+	txtEBID.Text=""
+	txtEBTitle.Text=""
+	txtEBAuthor.Text=""
+	txtEBCategory.Text=""
+	txtEBReadingLevel.Text=""
+	txtEBISBN.Text=""
+	txtEBBabcockCode.Text=""
+	txtEBOwner.Text=""
+	txtEBMedia.Text=""
+	txtEBStatus.Text=""
+	txtEBARQuiz.Text=""
+	txtEBBlurb.Text=""
+	txtEBDeweyRef.Text=""
+	EditBook.Close
+	Settings.Show
+	
+	
+End Sub
+
+Sub txtBookSearch_TextChanged (Old As String, New As String)
+	'=====================================================
+	' txtBookSearch_TextChanged
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	' 0.2   15/02/2020          Don't search until 4 chars entered
+	'
+	' Purpose:
+	'=========
+	'
+	'Fires when a character is entered into booksearch 
+	'
+	'
+	'Declared Variables
+	'==================
+	'
+	' sQuery 		string			SQL quesry
+	' RS			Rescortset		result of query
+	' intOutId		int				contains the uid of the user who has any given book 
+	'								used as a sub query to getUser Name for display purposes
+	'
+	
+	If New.Length>3 Then
+				
+			Private RS As ResultSet
+			Private strUserName As String
+			Private intOutId As Int
+			Private dList As List
+			
+			lblPleaseWait.Visible=True
+			Sleep(100)
+			
+			dList.Initialize
+			
+	
+			New="%" & New & "%"
+
+			sQuery="SELECT BabcockCode, Title,Author,OutTo FROM tblbook WHERE Author LIKE ? OR Title LIKE ?;"
+					
+			RecordEvent("SELECT BabcockCode, Title,Author,OutTo FROM tblbook WHERE Author LIKE '" & New & "' OR Title LIKE '" & New & "';")
+			tblbookSearchResults.Clear
+			
+					
+			RS = SQL.ExecQuery2(sQuery, Array As Object(New, New))
+			Do While RS.NextRow
+				
+				'=================IDENTIFY WHO HAS BOOK===========================
+				intOutId=RS.GetInt("OutTo")
+				RecordEvent("This book is out to " & intOutId & " " & getUserName(intOutId))
+					If intOutId>0 Then 
+						strUserName=getUserName(intOutId)
+					Else
+						strUserName="Available"
+					End If
+				'=================================================================
+				
+				Dim rData As Object = Array(RS.GetLong("BabcockCode"), RS.GetString("Title"), RS.GetString("Author"), strUserName)
+				'RecordEvent("Adding to tblbookSearch Results: " & RS.GetInt("id") & " " & RS.GetString("Title") & " " & RS.GetString("Author") & " " & strUserName)
+				dList.Add(rData)
+			Loop
+			RS.Close
+			
+		tblbookSearchResults.AddColumn("ID", tblbookSearchResults.COLUMN_TYPE_TEXT)
+		tblbookSearchResults.AddColumn("Title", tblbookSearchResults.COLUMN_TYPE_TEXT)
+		tblbookSearchResults.AddColumn("Author", tblbookSearchResults.COLUMN_TYPE_TEXT)
+		tblbookSearchResults.AddColumn("Out to", tblbookSearchResults.COLUMN_TYPE_TEXT)
+			
+			tblbookSearchResults.SetData(dList)
+			
+			lblPleaseWait.Visible=False
+	End If	
+End Sub
+
+Sub txtBookSearchEdit_TextChanged (Old As String, New As String)
+	'=====================================================
+	' txtBookSearchEdit_TextChanged
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	' 0.2   15/02/2020          Don't search until 4 chars entered
+	'
+	' Purpose:
+	'=========
+	'
+	'Fires when a character is entered into booksearchedit
+	'
+	'
+	'Declared Variables
+	'==================
+	'
+	' sQuery 		string			SQL quesry
+	' RS			Rescortset		result of query
+	' intOutId		int				contains the uid of the user who has any given book
+	'								used as a sub query to getUser Name for display purpose
+	
+	If New.Length>1 Then ' a lot of hits...
+	
+			Private RS As ResultSet
+			Private strUserName As String
+			Private intOutId As Int
+			Private dList As List
+
+			New="%" & New & "%"
+			dList.Initialize
+			
+		sQuery="SELECT BabcockCode, Title,Author,OutTo FROM tblbook WHERE Author LIKE ? OR Title LIKE ? OR BabcockCode Like ?;"
+					
+		RecordEvent("SELECT BabcockCode, Title,Author,OutTo FROM tblbook WHERE Author LIKE '" & New & "' OR Title LIKE '" & New & "' OR BabcockCode LIKE '" & New & "';")
+		tblbookSearchEditResults.Clear
+								
+			RS = SQL.ExecQuery2(sQuery, Array As Object(New, New, New))
+			Do While RS.NextRow
+				
+				'=================IDENTIFY WHO HAS BOOK===========================
+				intOutId=RS.GetInt("OutTo")
+					If intOutId>0 Then 
+						strUserName=getUserName(intOutId)
+					Else
+						strUserName="Available"
+					End If
+				'=================================================================
+				
+				Dim rData As Object = Array(RS.GetLong("BabcockCode"), RS.GetString("Title"), RS.GetString("Author"), strUserName)
+				'RecordEvent("Adding to tblbookSearch Results: " & RS.GetInt("id") & " " & RS.GetString("Title") & " " & RS.GetString("Author") & " " & strUserName)
+				dList.Add(rData)
+			Loop
+			RS.Close
+			
+			tblbookSearchEditResults.AddColumn("ID", tblbookSearchEditResults.COLUMN_TYPE_TEXT)
+			tblbookSearchEditResults.AddColumn("Title", tblbookSearchEditResults.COLUMN_TYPE_TEXT)
+			tblbookSearchEditResults.AddColumn("Author", tblbookSearchEditResults.COLUMN_TYPE_TEXT)
+			tblbookSearchEditResults.AddColumn("Out to", tblbookSearchEditResults.COLUMN_TYPE_TEXT)
+			
+			tblbookSearchEditResults.SetData(dList)
+			
+	End If
+	
+End Sub
+
+Sub tblbookSearchEditResults_CellClicked (ColumnId As String, RowId As Long)
+		
+
+	'======================================================
+	' tblbookSearchEditResults_CellClicked
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'Based on row selection, gather and populate BookEdit screen
+	'
+	'
+	' Passed Variables
+	'=================
+	'ColumnId		string		Index number of selected row, beginning from 0
+	'RowId			Long		RowPosition 
+	'
+	'
+	' Declared Variables
+	'===================
+	'RS			resultset		result of query
+	'sQuery		string			SQL query
+	'
+	'
+	' Returned Variables
+	'===================
+	' UI Variablles declared at beginning
+	'
+	'
+	'Notes
+	'=====
+	'
+	
+			Private RS As ResultSet
+			Private sQuery As String
+			Private CellValue As Int
+			
+			RecordEvent("Row chosen is " & RowId & " and Column is " & ColumnId)
+			
+			CellValue = tblbookSearchEditResults.GetRow(RowId).GetValueAt(0)
+			
+			RecordEvent("Selected Book Id = " & CellValue)	
+			
+			sQuery="SELECT * FROM tblbook Where BabcockCode=?;"
+			RecordEvent("SELECT * FROM tblbook Where BabcockCode=" & CellValue)
+			
+			RS = SQL.ExecQuery2(sQuery, Array As Object(CellValue))
+			Do While RS.NextRow
+				
+				txtEBID.Text=RS.GetInt("ID")
+				txtEBTitle.Text=RS.GetString("Title")
+				txtEBAuthor.Text=RS.GetString("Author")
+				txtEBReadingLevel.Text=RS.GetString("ReadingLevel")
+				txtEBISBN.Text=RS.GetString("ISBN")
+				txtEBBabcockCode.Text=RS.GetString("BabcockCode")
+				txtEBMedia.Text=RS.GetString("Media")
+				txtEBARQuiz.Text=RS.GetString("ARQuiz")
+				txtEBOwner.Text=RS.GetString("Owner")
+				txtEBCategory.Text=RS.GetString("Category")
+				txtEBStatus.Text=RS.GetString("BookStatus")
+				txtEBBlurb.Text=RS.GetString("Blurb")
+				txtEBDeweyRef.Text=RS.GetString("DeweyRef")
+				
+				'now to match dropdowns
+				
+				
+			Loop
+			RS.Close
+			
+			tblbookSearchEditResults.Clear
+			txtBookSearchEdit.Text=""
+			
+			'now show book
+			AdminSearch.Close
+			EditBook.Show
+			ChoiceBox(cbEBCategory,"BOOKCATEGORY", txtEBCategory.Text)
+			ChoiceBox(cbEBOwner, "OWNER", txtEBOwner.Text)
+			ChoiceBox(cbEBStatus, "BOOKSTATUS", txtEBStatus.Text)
+		
+
+	
+End Sub
+
+Sub getUserName(userid As Int) As String
+	'======================================================
+	' getUserName
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'Return String of information about the user with ID userid
+	'
+	'
+	' Passed Variables
+	'=================
+	'userid		int		ID ref of book in tbluser
+	'
+	'
+	' Declared Variables
+	'===================
+	'RS2			Resultset	return from query
+	'strResult2		string		concatenated string
+	'sQuery2		string		SQL query
+	'
+	' Returned Variables
+	'===================
+	'Concatenated String of Firtsname, Surname and Class
+	'
+	'
+	'Notes
+	'=====
+	'
+	If userid>0 Then
+		
+		Private RS2 As ResultSet
+		Private strResult2 As String
+		Private sQuery2 As String
+
+		sQuery2="SELECT FirstName, Surname, Class  FROM tbluser  WHERE id=?;"
+		
+		RS2 = SQL.ExecQuery2(sQuery2, Array As Object(userid))
+		Do While RS2.NextRow
+			strResult2=RS2.GetString("FirstName") & " " & RS2.GetString("Surname") & " " & RS2.GetString("Class")
+		Loop
+		RS2.Close
+	
+		RecordEvent("User Found: " & strResult2)
+		Return strResult2
+
+	Else
+		Return ""	
+	End If
+	
+End Sub
+
+Sub getHowManyBooks(userID As Int) As Int
+	'======================================================
+	' getHowManyBooks
+	'=============
+	'
+	' 0.1	17/1/20				Initial
+	'
+	' Purpose:
+	'=========
+	'Rteurn number of books each user has outstanding
+	
+	Private RS2 As ResultSet
+	Private strResult2 As Int
+	Private sQuery2 As String
+
+
+	sQuery2="SELECT User, COUNT(ID) As HowMany FROM tblborrow  WHERE User=? AND STATUS=1"
+	
+	RS2 = SQL.ExecQuery2(sQuery2, Array As Object(userID))
+	Do While RS2.NextRow
+		strResult2=RS2.GetInt("HowMany")
+	Loop
+	RS2.Close
+	
+	Return strResult2
+	
+	
+End Sub
+
+Sub IsStaff(userID As Int) As Boolean
+	'======================================================
+	' IsStaff
+	'=============
+	'
+	' 0.1	17/1/20				Initial
+	'
+	' Purpose:
+	'=========
+	'Rteurn True if person is a member of staff
+	'
+	Private RS2 As ResultSet
+	Private strResult2 As String
+	Private sQuery2 As String
+
+	sQuery2="SELECT Staff FROM tbluser  WHERE ID=?;"
+		
+	RS2 = SQL.ExecQuery2(sQuery2, Array As Object(userID))
+	Do While RS2.NextRow
+		strResult2=RS2.GetString("Staff")
+	Loop
+	RS2.Close
+	
+	If strResult2=Null Then strResult2=False
+	
+	Select strResult2
+		Case 1
+			strResult2=True
+		Case 0
+			strResult2=False
+	End Select
+	Return strResult2	
+	
+End Sub
+
+Sub getBookDetails(bookid As String) As String
+	'======================================================
+	' getBookDetails
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	' 0.2   17/1/20				Amend to be based on BabcockCode
+	'
+	' Purpose:
+	'=========
+	'Return String of information about the book with ID bookid
+	'
+	'
+	' Passed Variables
+	'=================
+	'bookid		int		Babcock ref of book in tblbook
+	'
+	'
+	' Declared Variables
+	'===================
+	'RS2			Resultset	return from query
+	'strResult2		string		concatenated string
+	'sQuery2		string		SQL query
+	'
+	' Returned Variables
+	'===================
+	'Concatenated String of Title and Author
+	'
+	'
+	'Notes
+	'=====
+	'
+	If bookid>0 Then
+		
+		Private RS2 As ResultSet
+		Private strResult2 As String
+		Private sQuery2 As String
+
+		sQuery2="SELECT Title, Author  FROM tblbook  WHERE BabcockCode=?"
+		
+		RecordEvent("getBookDetails: " & bookid)
+		
+		RS2 = SQL.ExecQuery2(sQuery2, Array As Object (bookid))
+		Do While RS2.NextRow
+			strResult2=RS2.GetString("Title") & Chr(13) & RS2.GetString("Author")
+		Loop
+		RS2.Close
+	
+		RecordEvent("Book Found: " & strResult2)
+		Return strResult2
+
+	Else
+		Return ""
+	End If
+	
+	
+End Sub
+
+Sub getBookDetailsFromISBN(bookid As String) As String
+	'======================================================
+	' getBookDetailsFromISBN
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	' 0.2   17/1/20				Amend to be based on BabcockCode
+	' 0.3   06/09/22			Modied from getbookdetails to search on ISBN
+	'
+	' Purpose:
+	'=========
+	'Return String of information about the book with ID bookid
+	'
+	'
+	' Passed Variables
+	'=================
+	'bookid		int		Babcock ref of book in tblbook
+	'
+	'
+	' Declared Variables
+	'===================
+	'RS2			Resultset	return from query
+	'strResult2		string		concatenated string
+	'sQuery2		string		SQL query
+	'
+	' Returned Variables
+	'===================
+	'Concatenated String of Title and Author
+	'
+	'
+	'Notes
+	'=====
+	'
+	If bookid>0 Then
+		
+		Private RS2 As ResultSet
+		Private strResult2 As String
+		Private sQuery2 As String
+
+		sQuery2="SELECT Title, Author  FROM tblbook  WHERE ISBN=?"
+		
+		RecordEvent("getBookDetailsfromISBN: " & bookid)
+		
+		RS2 = SQL.ExecQuery2(sQuery2, Array As Object (bookid))
+		Do While RS2.NextRow
+			strResult2=RS2.GetString("Title") & Chr(13) & RS2.GetString("Author")
+		Loop
+		RS2.Close
+	
+		RecordEvent("Book Found: " & strResult2)
+		Return strResult2
+
+	Else
+		Return ""
+	End If
+	
+	
+	
+End Sub
+
+
+Sub btnBSExit_Click
+	'======================================================
+	' btnBSExit_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Event fired by BookSearch Exit Button.
+	' and return to main menu
+	
+	SearchBook.Close
+	MainForm.Show
+
+End Sub
+
+Sub btnBSEditExit_Click
+	'======================================================
+	' btnBEditExit_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Event fired by BookEditSearch Exit Button.
+	' and return to main menu
+	
+	SearchBook.Close
+	Settings.Show
+
+End Sub
+
+'=============================================
+' Add Child UI
+'=============================================	
+
+Sub btnACCancel_Click
+	'======================================================
+	' btnACCancel_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Event fired by AddChild Cancel Button.
+	' Close AddChild and return to Settings Screen
+	
+	AddChild.Close
+	Settings.Show
+	
+End Sub
+
+Sub btnACClose_Click
+
+	'======================================================
+	' btnACClose_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	'Event fired when AddChild Close button is clicked
+	' Validate Data on AddChild Form and then use it to
+	' pass Paramatarised Query to Insert contents into tbluser table
+	
+	'Declared variables
+	'==================
+	'
+	' errorflag		boolean		flag set to false if data is incomplete
+	' sQuery		string		SQL query
+	'
+	' All other variables taken from the AddChild UI form
+	'
+	'Notes
+	'=====
+'	
+	'Save book Added
+	Private errorflag As Boolean=True
+	
+	
+	'Validate
+	
+	If txtACFirstName.Text.Length=0 Then errorflag=False
+	If txtACSurname.Text.Length=0 Then errorflag=False
+	If txtACClass.Text.Length=0 Then errorflag=False
+	
+	If errorflag=True Then
+	
+		'If passes now update
+		Private sQuery As String
+		Private LastID As Int
+		
+								
+		sQuery="INSERT INTO tbluser (FirstName, Surname, Class, Level, Notes, Staff) " & _
+					"VALUES (?,?,?,?,?,?)" 
+
+		RecordEvent(sQuery)
+		SQL.ExecNonQuery2(sQuery, Array As Object(txtACFirstName.Text, txtACSurname.Text, txtACClass.Text, txtACLevel.Text, txtACNotes.Text, chkStaff.Checked))
+		
+		' get UID of User to create barcode
+		Private RS As ResultSet
+			sQuery="SELECT LAST_INSERT_ID();"
+			RS=SQL.ExecQuery(sQuery)
+			RS.NextRow
+			LastID=RS.GetInt("LAST_INSERT_ID()")
+		RS.Close
+		
+		RecordEvent("Child: "  & txtACFirstName.Text & " " & txtACSurname.Text & " Added with ID Number: " & LastID)
+		DialogMsg(txtACFirstName.Text & " " & txtACSurname.Text & " added to System with ID Number: " & LastID, Settings.RootPane)
+		
+		txtACFirstName.Text=""
+		txtACSurname.Text=""
+		txtACClass.Text=""
+		txtACNotes.Text=""
+
+		
+					
+	Else ' validation fails
+	
+		DialogMsg("Some important information is missing" & Chr(13) & "so the child record cannot be saved." & Chr(13) & "Click 'Add User' Again", Settings.RootPane)
+	
+	End If
+	
+	AddChild.Close
+	Settings.Show
+	
+End Sub
+
+
+'
+'=============================================
+' Search Child UI
+'=============================================	
+Sub txtChildSearchEdit_TextChanged (Old As String, New As String)
+	
+	'======================================================
+	' txtChildSearchEdit_TextChanged
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	' 0.2   15/07/2022			Crash fixed, made like txtBookSearchEdit_TextChanged
+	'
+	' Purpose:
+	'=========
+	'
+	' When the editbox txtChildSearchEdit is changed, fire the New String
+	' and populate the tblChildSearchEditResults table
+	'
+	' Passed Variables
+	'=================
+	'old	string	what the text box was before
+	'new	string  what the tring is now (usually only a single character more)
+	'
+	' Declared Variables
+	'===================
+	'
+	' sQuery	string	SQL Query
+	' rData		Array	Populate data from Query
+	'
+	'
+	'Notes
+	'=====
+	
+	If New.Length>1 Then ' a lot of hits...
+	
+	Private RS As ResultSet
+	Private sQuery As String
+	Private dList As List
+
+	New="%" & New & "%"
+	dList.Initialize
+	
+	Private RS As ResultSet
+	
+	sQuery="SELECT * FROM tbluser WHERE Surname LIKE ? OR FirstName LIKE ?;"
+			
+	RecordEvent("SELECT * FROM tbluser WHERE Surname LIKE '" &  New & "' OR FirstName LIKE '" & New & "';")
+	tblChildSearchEditResults.Clear
+			
+	RS = SQL.ExecQuery2(sQuery, Array As Object(New, New))
+	Do While RS.NextRow
+		Dim rData As Object = Array(RS.GetInt("id"), RS.GetString("FirstName"), RS.GetString("Surname"), RS.GetString("Class"))
+		dList.Add(rData)
+	Loop
+	RS.Close
+	
+	tblChildSearchEditResults.AddColumn("ID", tblbookSearchEditResults.COLUMN_TYPE_TEXT)
+	tblChildSearchEditResults.AddColumn("First Name", tblbookSearchEditResults.COLUMN_TYPE_TEXT)
+	tblChildSearchEditResults.AddColumn("Surname", tblbookSearchEditResults.COLUMN_TYPE_TEXT)
+	tblChildSearchEditResults.AddColumn("Class", tblbookSearchEditResults.COLUMN_TYPE_TEXT)
+			
+	tblChildSearchEditResults.SetData(dList)
+
+End If	
+End Sub
+
+Sub btnCSEditExit_Click
+	'======================================================
+	' btnCSEditExit_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Event fired by ChildSearch Exit Button.
+	' Close ChildSearch and return to Settings Screen
+	
+	ChildSearch.Close
+	Settings.Show
+	
+End Sub
+
+
+Sub tblChildSearchEditResults_CellClicked(ColumnId As String, RowId As Long)
+	'======================================================
+	' tblChildSearchEditResults_SelectedRowChanged
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	' 0.2   15/07/2022          Made like tblBookSearchEditResults_CellClicked
+	'
+	' Purpose:
+	'=========
+	'
+	' When user selects a row on tblChildSearchEditResults
+	' gather data on that User/Child and populate the EditChild Form
+	' ready for editing. Once passed, SeletedRow is cleared (and filtered)
+	' so as to prevent foiring again.
+	'
+	' Passed Variables
+	'=================
+	'
+	' Index		Int		Index value of selected Row
+	' Row		Array	each column contains data of selectedrow ie Row(0) is id column
+	'
+	' Declared Variables
+	'===================
+	'
+	' sQuery 	String		SQL Query
+	' RS		Resultset	Result of Query
+	'
+	'Notes
+	'=====
+'	
+	Private RS As ResultSet
+	Private sQuery As String
+	Private CellValue As Int
+			
+	RecordEvent("Row chosen is " & RowId & " and Column is " & ColumnId)
+			
+	CellValue = tblChildSearchEditResults.GetRow(RowId).GetValueAt(0)
+			
+	RecordEvent("Selected Child Id = " & CellValue)
+			
+	sQuery="SELECT * FROM tbluser Where ID=?;"
+	RecordEvent("SELECT * FROM tbluser Where ID=" & CellValue)
+			
+	RS = SQL.ExecQuery2(sQuery, Array As Object(CellValue))
+	
+			Do While RS.NextRow
+				
+					txtECFirstName.Text=RS.GetString("FirstName")
+					txtECSurname.Text=RS.GetString("Surname")
+					txtECClass.Text=RS.GetString("Class")
+					txtECLevel.Text=RS.GetString("Level")
+					txtECNotes.Text=RS.GetString("Notes")
+					lblChildID.Text=RS.GetString("ID")												
+									
+			Loop
+			RS.Close
+			
+			txtChildSearchEdit.Text=""
+			tblChildSearchEditResults.Clear
+			
+			'now show child
+			ChildSearch.Close
+			EditChild.Show
+			
+End Sub
+
+Sub btnECClose_Click
+	'======================================================
+	' btnECClose_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Event fired by Edit Child Save and Exit Button.
+	' Validate essential fields
+	' then UPDATE paramaterised query
+	' Clear Form, Close and return to Settings Page
+	'
+	' Declared Variables
+	'===================
+	'
+	' errorflag		boolean		Set to false if error detected
+	' sQuery		string		contains SQL
+	'
+	' Othewr variables drawn from UI elements of EditChild
+
+	Private errorflag As Boolean=True
+	
+	'Validate
+	
+	If txtECFirstName.Text.Length=0 Then errorflag=False
+	If txtECSurname.Text.Length=0 Then errorflag=False
+	If txtECClass.Text.Length=0 Then errorflag=False
+	
+	If errorflag=True Then
+	
+		'If passes now update
+		Private sQuery As String
+				
+		sQuery="UPDATE tbluser SET FirstName=?, Surname=?, Class=?, Level=?, Notes=?, Staff=? WHERE id=?"
+
+		RecordEvent("UPDATE tbluser SET FirstName=" & txtECFirstName.Text & ", Surname=" & txtECSurname.Text & _
+		            ", Class=" & txtECClass.Text & ", Level=" & txtECLevel.Text & ", Notes=" & txtECNotes.Text & _
+					", Staff=" & chkStaff.Checked & " WHERE id=" & lblChildID.Text & ")")
+		SQL.ExecNonQuery2(sQuery, Array As Object(txtECFirstName.Text, txtECSurname.Text, txtECClass.Text, txtECLevel.Text, txtECNotes.Text, chkStaff.Checked, lblChildID.Text))
+			
+		
+		RecordEvent("Child: "  & txtECFirstName.Text & " " & txtECSurname.Text & " Updated")
+		DialogMsg(txtECFirstName.Text & " " & txtECSurname.Text & " amended", AddChild.RootPane)
+		
+		txtECFirstName.Text=""
+		txtECSurname.Text=""
+		txtECClass.Text=""
+		txtECNotes.Text=""
+		chkStaff.Checked=False
+					
+	Else ' validation fails
+	
+		DialogMsg("Some important information is missing" & Chr(13) & "so the child record cannot be saved." & Chr(13) & "Please check.", AddChild.RootPane)
+		
+	
+	End If
+	
+	EditChild.Close
+	Settings.Show
+	
+End Sub
+
+Sub btnECCancel_Click
+	'======================================================
+	' btnECCancel_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Event fired by Edit Child Cancel Button.
+	' Close EditChild and return to Settings Screen
+	'
+	
+	EditChild.Close
+	Settings.Show
+
+End Sub
+
+'======================================================
+' <Sub Name> 
+'=============
+'
+' 0.1	19/11/2019			Initial		
+'
+' Purpose:
+'=========
+'
+'
+'
+' Passed Variables
+'=================
+'
+'
+'
+' Declared Variables
+'===================
+'
+'
+'
+' Returned Variables
+'===================
+'
+'
+'
+'Notes
+'=====
+'
+
+
+Sub btnARTNotThisBook_Click
+	'======================================================
+	' btnARTNoteThisBook_Click
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' If the user clicks Not This Book on the Return book form
+	' then clear book input and ask again
+	
+	
+	txtARTBook.Text=""
+	chkARTBookValid.Visible=False
+	btnARTNotThisBook.Visible=False
+	txtARTBook.Enabled=True
+	txtARTBook.RequestFocus
+End Sub
+
+Sub btnARTExit_Click
+	'=====================================================
+	' btnRTExit_Click
+	'=============
+	'
+	' 0.1	27/12/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' Reset all UI elements on Return Book form and return to Main Menu
+	
+	txtARTBook.Enabled=True
+	txtARTBook.Text=""
+	chkARTBookValid.Visible=False
+	btnARTNotThisBook.Visible=False
+	AdminReturnBook.Close
+	MainForm.Show
+	
+	
+End Sub
+
+Sub btnARTBookValidate_Click
+	'=====================================================
+	' btnARTUserValidate_Click
+	'=============
+	'
+	' 0.1	28/12/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	'Enabkes the user to confiurm the right book has been entered
+	'puts a big toick on screen and the run book in
+	
+	Private intBookOwner As Int
+	Private strBookOwner As String
+	
+	If txtARTBook.Text.Length>0 Then
+		
+		Private strResult As String
+		
+		strResult = getBookDetails(txtARTBook.Text)
+		
+		intBookOwner=getwhoHasBook(txtARTBook.Text)
+		strBookOwner=getUserName(intBookOwner)
+		
+		If intBookOwner=0 Then strBookOwner= "No-one."
+		
+		strResult = strResult & Chr(13) & Chr(13) & " Currently borrowed by " & Chr(13) & strBookOwner
+		
+			If strResult.Length=0 Then
+				DialogMsg("That book has not been found", AdminReturnBook.RootPane)
+				chkARTBookValid.Visible=False
+				btnARTNotThisBook.Visible=False
+				txtARTBook.Text=""
+				txtARTBook.RequestFocus
+			Else
+				lblARTBookCheck.Text=strResult
+				If intBookOwner<>0 Then chkARTBookValid.Visible=True
+				txtARTBook.Enabled=False
+				btnARTbookout.RequestFocus
+				btnARTNotThisBook.Visible=True
+			End If ' book not found
+				
+	End If  ' text box empty
+		
+End Sub
+
+Sub btnARTbookout_Click
+	'=====================================================
+	' btnRTbookout_Click
+	'=============
+	'
+	' 0.1	28/12/2019			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	' If both fields have been validated then mark book out
+	' otherwise diplay error message
+	
+	Dim intBookOwner As Int
+	
+	If (chkARTBookValid.Visible=False) Then
+		DialogMsg("Book Data is missing. Click in the box and scan the appropriate Barcode", AdminReturnBook.RootPane)
+	Else
+		intBookOwner=getwhoHasBook(txtARTBook.Text)
+		
+		RecordEvent("Returning book id " & txtARTBook.Text & " for user " & intBookOwner)
+		
+		bookBack(intBookOwner,txtARTBook.Text)
+		
+		txtARTBook.Text=""
+		txtARTBook.Enabled=True
+		chkARTBookValid.Visible=False
+		btnARTNotThisBook.Visible=False
+		txtARTBook.RequestFocus
+	End If
+End Sub
+
+Sub RecordEvent(strMessage As String)
+	'=====================================================
+	' RecordEvent
+	'=============
+	'
+	' 0.1	08/1/2020			Initial
+	' 0.2   22/1/20             Name Change
+	' 0.3   11/9/21             Changew to constdatalocation
+	'
+	' Purpose:
+	'=========
+	'
+	' Append strMessage to the ActivitLog stored in 
+	' C:\Users\Public\SchoolLibrary\SchoolLibraryLog.txt
+	
+	'Check if File Exists and Create if Not
+	If File.Exists(constDataLocation, "SchoolLibraryLog.txt") Then
+	
+		Dim Writer As TextWriter
+		Writer.Initialize(File.OpenOutput(constDataLocation, "SchoolLibraryLog.txt", True))
+		Writer.WriteLine(DateUtils.TicksToString( DateTime.Now) & " " & strMessage)
+		Writer.Flush
+		Writer.Close
+		
+	 Else
+	 	Dim dt As Long = DateTime.Now
+		DateTime.DateFormat="dd/MM/yyyy"
+		DateTime.TimeFormat="HH:mm:ss"
+	 	File.WriteString(constDataLocation, "SchoolLibraryLog.txt","School Library Log created " & DateTime.Date(dt) & " " & DateTime.Time(dt))
+	 End If
+	
+
+	'now display for debug purposes
+	Log(strMessage)
+	
+	
+End Sub
+
+
+Sub btnSearchLevel_Click
+	'=====================================================
+	' btnSearchLevel_Click
+	'=============
+	'
+	' 0.1	16/1/2020			Initial
+	'
+	' Purpose:
+	'=========
+	' Show search by Reading Level
+	
+	Settings.Close
+	LevelSearch.Show
+	
+End Sub
+
+Sub sbBookLevel_ValueChanged (Value As Int)
+	
+	txtLevelSearch.Text=NumberFormat(Value/10,1,1)
+	searchByLevel(NumberFormat(Value/10,1,1))
+End Sub
+
+Sub btnLSExit_Click
+	'=====================================================
+	' btnSExit_Click
+	'=============
+	'
+	' 0.1	16/1/2020			Initial
+	'
+	' Purpose:
+	'=========
+	' Exit Screen and reload settings
+	
+	LevelSearch.Close
+	Settings.Show
+	
+End Sub
+
+Sub searchByLevel(strLevel As String)
+	'=====================================================
+	' searchByLevel
+	'=============
+	'
+	' 0.1	16/01/20			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	'Return Books based upon book level
+	'
+	'
+	'Declared Variables
+	'==================
+	'
+	' sQuery 		string			SQL quesry
+	' RS			Rescortset		result of query
+	' intOutId		int				contains the uid of the user who has any given book
+	'								used as a sub query to getUser Name for display purposes
+	'
+	Private RS As ResultSet
+	Private strUserName As String
+	Private intOutId As Int
+	Private lstBooks As List
+
+	sQuery="SELECT BabcockCode,Title,Author,OutTo FROM tblbook WHERE ReadingLevel=?;"
+			
+	RecordEvent("SELECT BabcockCode,Title,Author,OutTo FROM tblbook WHERE ReadingLevel=" & strLevel & ";")
+	lstBooks.Initialize
+	
+	RS = SQL.ExecQuery2(sQuery, Array As Object(strLevel))
+	Do While RS.NextRow
+		
+		'=================IDENTIFY WHO HAS BOOK===========================
+		intOutId=RS.GetInt("OutTo")
+		RecordEvent("This book is out to " & intOutId & " " & getUserName(intOutId))
+		If intOutId>0 Then
+			strUserName=getUserName(intOutId)
+		Else
+			strUserName="Available"
+		End If
+		'=================================================================
+		
+		Dim rData As Object = Array(RS.GetInt("BabcockCode"), RS.GetString("Title"), RS.GetString("Author"), strUserName)
+		RecordEvent("Adding to tblLevelSearch Results: " & RS.GetInt("BabcockCode") & " " & RS.GetString("Title") & " " & RS.GetString("Author") & " " & strUserName)
+		lstBooks.Add(rData)
+	Loop
+	RS.Close
+	
+	tblLevelSearchResults.Clear
+	
+	tblLevelSearchResults.AddColumn("ID", tblLevelSearchResults.COLUMN_TYPE_TEXT)
+	tblLevelSearchResults.AddColumn("Title", tblLevelSearchResults.COLUMN_TYPE_TEXT)
+	tblLevelSearchResults.AddColumn("Author", tblLevelSearchResults.COLUMN_TYPE_TEXT)
+	tblLevelSearchResults.AddColumn("Out To", tblLevelSearchResults.COLUMN_TYPE_TEXT)
+	
+	tblLevelSearchResults.SetData(lstBooks)
+	
+	tblLevelSearchResults.Refresh
+	
+	lblBooksFound.Text = "Total Books = " & lstBooks.Size
+		
+End Sub
+
+Sub tblLevelSearchResults_CellClicked(ColumnId As String, RowId As Long)
+	'======================================================
+	' tblLevelSearchResults_CellClicked
+	'=============
+	'
+	' 0.1	19/11/2019			Initial
+	' 0.2   23/4/20             Converted from other module for LevelSearch
+	'
+	' Purpose:
+	'=========
+	'Based on row selection, gather and populate BookEdit screen
+	'
+	'
+	' Passed Variables
+	'=================
+	'ColumnId		string		Index number of selected row, beginning from 0
+	'RowId			Long		RowPosition 
+	'
+	'
+	' Declared Variables
+	'===================
+	'RS			resultset		result of query
+	'sQuery		string			SQL query
+	'
+	'
+	' Returned Variables
+	'===================
+	' UI Variablles declared at beginning
+	'
+	'
+	'Notes
+	'=====
+	'
+	
+			Private RS As ResultSet
+			Private sQuery As String
+			Private CellValue As Int
+			
+			RecordEvent("Row chosen is " & RowId & " and Column is " & ColumnId)
+			
+			CellValue = tblLevelSearchResults.GetRow(RowId).GetValueAt(0)
+			
+			RecordEvent("Selected Book Id = " & CellValue)	
+			
+			sQuery="SELECT * FROM tblbook Where BabcockCode=?;"
+			RecordEvent("SELECT * FROM tblbook Where BabcockCode=" & CellValue)
+			
+			RS = SQL.ExecQuery2(sQuery, Array As Object(CellValue))
+			Do While RS.NextRow
+				
+				txtEBID.Text=RS.GetInt("ID")
+				txtEBTitle.Text=RS.GetString("Title")
+				txtEBAuthor.Text=RS.GetString("Author")
+				txtEBReadingLevel.Text=RS.GetString("ReadingLevel")
+				txtEBISBN.Text=RS.GetString("ISBN")
+				txtEBBabcockCode.Text=RS.GetString("BabcockCode")
+				txtEBMedia.Text=RS.GetString("Media")
+				txtEBARQuiz.Text=RS.GetString("ARQuiz")
+				txtEBOwner.Text=RS.GetString("Owner")
+				txtEBCategory.Text=RS.GetString("Category")
+				txtEBStatus.Text=RS.GetString("BookStatus")
+				txtEBBlurb.Text=RS.GetString("Blurb")
+				
+				'now to match dropdowns
+				
+				
+			Loop
+			RS.Close
+			
+			tblLevelSearchResults.Clear
+			
+			'now show book
+			AdminSearch.Close
+			EditBook.Show
+			ChoiceBox(cbEBCategory,"BOOKCATEGORY", txtEBCategory.Text)
+			ChoiceBox(cbEBOwner, "OWNER", txtEBOwner.Text)
+			ChoiceBox(cbEBStatus, "BOOKSTATUS", txtEBStatus.Text)
+		
+End Sub
+
+Sub searchISBN_Click
+	'=====================================================
+	' searchISBN 
+	'=============
+	'
+	' 0.1	18/01/20			Initial
+	'
+	' Purpose:
+	'=========
+	'
+	'Look up basic info on book based on ISBN using Google Books API
+	'
+	'
+Dim sContainer As String	
+Dim j As HttpJob
+
+	' load webpage
+	j.Initialize("", Me)
+	j.Download("https://www.googleapis.com/books/v1/volumes?q=isbn:" & txtABISBN.Text & "&key=AIzaSyClSZTpDFyCdGSNXq6AJ_EKUuj0a_svbHA")
+	Wait For (j) JobDone(j As HttpJob)
+	If j.Success Then
+		sContainer=j.GetString
+		'RecordEvent(sContainer)
+		RecordEvent("=================================")
+	End If
+	j.Release
+
+	'extract data
+
+	Dim parser As JSONParser
+	parser.Initialize(sContainer)
+	Dim root As Map = parser.NextObject
+	Dim totalItems As Int = root.Get("totalItems")
+	
+	RecordEvent("Total Items : " & totalItems)
+	
+	If totalItems>0 Then
+	
+		'Dim kind As String = root.Get("kind")
+		Dim items As List = root.Get("items")
+		Dim fullAuthors As String
+		For Each colitems As Map In items
+			'		Dim saleInfo As Map = colitems.Get("saleInfo")
+			'		Dim country As String = saleInfo.Get("country")
+			'		Dim isEbook As String = saleInfo.Get("isEbook")
+			'		Dim saleability As String = saleInfo.Get("saleability")
+			'		Dim searchInfo As Map = colitems.Get("searchInfo")
+			'		Dim textSnippet As String = searchInfo.Get("textSnippet")
+			'		Dim kind As String = colitems.Get("kind")
+			Dim volumeInfo As Map = colitems.Get("volumeInfo")
+			'		Dim industryIdentifiers As List = volumeInfo.Get("industryIdentifiers")
+			'		For Each colindustryIdentifiers As Map In industryIdentifiers
+			'			Dim identifier As String = colindustryIdentifiers.Get("identifier")
+			'			Dim Type As String = colindustryIdentifiers.Get("type")
+			'		Next
+			'		Dim pageCount As Int = volumeInfo.Get("pageCount")
+			'		Dim printType As String = volumeInfo.Get("printType")
+			'		Dim readingModes As Map = volumeInfo.Get("readingModes")
+			'		Dim image As String = readingModes.Get("image")
+			'		Dim text As String = readingModes.Get("text")
+			'		Dim previewLink As String = volumeInfo.Get("previewLink")
+			'		Dim canonicalVolumeLink As String = volumeInfo.Get("canonicalVolumeLink")
+			Dim description As String = volumeInfo.Get("description")
+			'		Dim language As String = volumeInfo.Get("language")
+			Dim title As String = volumeInfo.Get("title")
+			'		Dim imageLinks As Map = volumeInfo.Get("imageLinks")
+			'		Dim thumbnail As String = imageLinks.Get("thumbnail")
+			'		Dim smallThumbnail As String = imageLinks.Get("smallThumbnail")
+			Dim subtitle As String = volumeInfo.Get("subtitle")
+			'		Dim panelizationSummary As Map = volumeInfo.Get("panelizationSummary")
+			'		Dim containsImageBubbles As String = panelizationSummary.Get("containsImageBubbles")
+			'		Dim containsEpubBubbles As String = panelizationSummary.Get("containsEpubBubbles")
+			'		Dim publisher As String = volumeInfo.Get("publisher")
+			'		Dim publishedDate As String = volumeInfo.Get("publishedDate")
+			'		Dim categories As List = volumeInfo.Get("categories")
+			'		For Each colcategories As String In categories
+			'		Next
+			'		Dim maturityRating As String = volumeInfo.Get("maturityRating")
+			'		Dim allowAnonLogging As String = volumeInfo.Get("allowAnonLogging")
+			'		Dim contentVersion As String = volumeInfo.Get("contentVersion")
+			Dim authors As List = volumeInfo.Get("authors")
+			For Each colauthors As String In authors
+				fullAuthors=fullAuthors & colauthors & " "
+			Next
+			'		Dim infoLink As String = volumeInfo.Get("infoLink")
+			'		Dim etag As String = colitems.Get("etag")
+			'		Dim id As String = colitems.Get("id")
+			'		Dim accessInfo As Map = colitems.Get("accessInfo")
+			'		Dim accessViewStatus As String = accessInfo.Get("accessViewStatus")
+			'		Dim country As String = accessInfo.Get("country")
+			'		Dim viewability As String = accessInfo.Get("viewability")
+			'		Dim pdf As Map = accessInfo.Get("pdf")
+			'		Dim isAvailable As String = pdf.Get("isAvailable")
+			'		Dim webReaderLink As String = accessInfo.Get("webReaderLink")
+			'		Dim epub As Map = accessInfo.Get("epub")
+			'		Dim isAvailable As String = epub.Get("isAvailable")
+			'		Dim publicDomain As String = accessInfo.Get("publicDomain")
+			'		Dim quoteSharingAllowed As String = accessInfo.Get("quoteSharingAllowed")
+			'		Dim embeddable As String = accessInfo.Get("embeddable")
+			'		Dim textToSpeechPermission As String = accessInfo.Get("textToSpeechPermission")
+			'		Dim selfLink As String = colitems.Get("selfLink")
+		Next
+		'
+	
+		txtABTitle.Text=title
+		If subtitle.Length>0 Then txtABTitle.Text = txtABTitle.Text & ": " & subtitle
+		txtABAuthor.Text=fullAuthors
+		txtBlurb.Text=description
+			
+	Else
+		txtABTitle.Text=""
+		txtABAuthor.Text=""
+	End If
+	
+End Sub
+
+Sub btnBCUExecute_Click
+	'=====================================================
+	' btnBCUExecute_Click
+	'=============
+	'
+	' 0.1	21/01/20			Initial
+	'
+	' Purpose:
+	'=========
+	'xecute UPDATE query on class name
+	
+	Private RS As ResultSet
+	Private sQuery As String
+	Private intRecords As Int
+	
+	sQuery="SELECT COUNT(ID) AS ToBeDeleted FROM tbluser WHERE Class=?"
+	RS=SQL.ExecQuery2(sQuery, Array As Object(txtBCUFrom.Text))
+	Do While RS.NextRow
+		intRecords=RS.GetInt("ToBeDeleted")
+	Loop
+	
+	sQuery="UPDATE tbluser SET Class=? WHERE Class=?;"			
+	RecordEvent("Updating " & intRecords & " records of class from " & txtBCUFrom.Text & " to " & txtBCUTo.Text)
+	SQL.ExecNonQuery2(sQuery, Array As Object(txtBCUTo.Text, txtBCUFrom.Text))
+	DialogMsg("Updated " & intRecords & " records from " & txtBCUFrom.Text & " class to " & txtBCUTo.Text, Settings.RootPane)
+	
+End Sub
+
+Sub btnDeleteXX_Click
+	'=====================================================
+	' btnDeleteXX_Click
+	'=============
+	'
+	' 0.1	21/01/20			Initial
+	'
+	' Purpose:
+	'=========
+	' Delete whole CLASS
+	
+	Private RS As ResultSet
+	Private sQuery As String
+	Private intRecords As Int
+	
+	Private Dialog As B4XDialog
+	
+	Dialog.Initialize(Settings.RootPane)
+	
+	Dialog.Title=cSchool
+	Dialog.BlurBackground=True
+
+	Wait For (Dialog.Show("Do you want to PERMANENTLY delete these records?", "YES", "NO", "")) Complete (Result As Int)
+	If Result = XUI.DialogResponse_Positive Then
+	
+		sQuery="SELECT COUNT(ID) AS ToBeDeleted FROM tbluser WHERE Class='XX'"
+		RS=SQL.ExecQuery(sQuery)
+		Do While RS.NextRow
+			intRecords=RS.GetInt("ToBeDeleted")
+		Loop
+		
+		sQuery="DELETE FROM tbluser WHERE Class='XX';"
+		RecordEvent("Deleted " & intRecords & " records")
+		SQL.ExecNonQuery(sQuery)
+		DialogMsg("Deleted " & intRecords & " records", Settings.RootPane)
+
+	End If
+	
+End Sub
+
+Sub btnBCURefresh_Click
+	' Rfresh tvBCUUsersTable
+	
+	ShowBCUUsers
+	
+End Sub
+
+Sub ShowBCUUsers
+	'=====================================================
+	' ShowBCUUsers
+	'=============
+	'
+	' 0.1	21/01/20			Initial
+	'
+	' Purpose:
+	'=========
+	' Display a Table of all users for easy ref when doing bulk changes and deletes
+	'======================================================
+	
+	Private RS As ResultSet
+
+	sQuery="SELECT * FROM tbluser WHERE Class <>'Staff' ORDER BY Class DESC, Surname ASC;"
+			
+	RecordEvent(sQuery)
+			
+	RS = SQL.ExecQuery(sQuery)
+	Do While RS.NextRow
+		Dim rData As Object = Array(RS.GetString("Class"), RS.GetString("FirstName"), RS.GetString("Surname"))
+		tvBCUUsers.Items.Add(rData)
+	Loop
+	RS.Close
+	
+End Sub
+
+'==========================================================
+' REPORT SUBROUTINES
+'==========================================================
+
+
+' REPORTS MENU
+
+Sub btnMissingBooks_Click
+	MissingBooksReport
+End Sub
+
+Sub btnReport1_Click
+	BorrowedByClassReport
+End Sub
+
+Sub MissingBooksReport
+	
+	'=====================================================
+	' Missing Book Report
+	'=============
+	'
+	' 0.1	10/02/20			Initial
+	'
+	' Purpose:
+	'=========
+	' Create an onscreen and therefore printable report of what books are marked as
+	' missing on the system using Steve05's methodology
+	
+	
+	Private RW As ReportWriter
+	Private dtCurrent As String
+	
+	RW.Initialize("rptMissingBooks",487,733)
+	
+	'Position the working form off the screen
+	RW.PositionForm(-800,0)
+
+	'Set subtotals to display on change of data in column 0
+	'RW.GroupBy(0)
+	
+	'Set totals
+	RW.ShowTotal = False
+	
+	'Setup some test data
+	Dim Data As Map
+	Data.Initialize
+	
+	'Static field header
+	Data.Put("Header","Missing Books")
+	
+	'Set up the row data (List of arrays)
+	Dim L As List
+	L.Initialize
+	
+	Private sQuery As String
+	Private RS As ResultSet
+	
+	'BOOKSTATUS=3 is missing books
+	sQuery="SELECT * FROM `tblbook` WHERE BookStatus=3;"
+			
+
+	RS = SQL.ExecQuery(sQuery)
+	Do While RS.NextRow
+		Dim rData() As String = Array As String(RS.GetString("BabcockCode"),  RS.GetString("Title"),  RS.GetString("Author"),  RS.GetString("Media"))
+		
+		L.Add(rData)
+	Loop
+	RS.Close
+	
+	Data.Put("RowData",L)
+	
+	DateTime.DateFormat="dd/MM/yyyy HH:mm:ss"
+	dtCurrent=DateTime.Date(DateTime.Now)
+	
+	'Static field footer
+	Data.Put("Footer", cSchool & " " & dtCurrent)
+	
+	'Assign the data
+	RW.Data = Data
+	
+	RW.PreviewSetup(30,30,30,30,False,False)
+	RW.PreviewShow(0)
+End Sub
+
+Sub ClassUserIDReport
+	'=====================================================
+	' ClassUserID Report
+	'=============
+	'
+	' 0.1	20/01/23			Initial
+	'
+	' Purpose:
+	'=========
+	' Create an onscreen and therefore printable report of User IDs by Class
+	' borrowed grouped by Class using Steve05's methodology
+	
+	
+	Private RW As ReportWriter
+	Private dtCurrent As String
+	
+	RW.Initialize("rptClassUserID",487,733)
+	
+	'Position the working form off the screen
+	RW.PositionForm(-800,0)
+
+	'Set subtotals to display on change of data in column 0
+	RW.GroupBy(0)
+	
+	'Set totals
+	RW.ShowTotal = False
+	
+	'Setup some test data
+	Dim Data As Map
+	Data.Initialize
+	
+	'Static field header
+	Data.Put("Header","User ID Report")
+	
+	'Set up the row data (List of arrays)
+	Dim L As List
+	L.Initialize
+	
+	Private sQuery As String
+	Private RS As ResultSet
+	
+	sQuery=" SELECT Class, FirstName, Surname, ID FROM tbluser WHERE Staff=False " &  _
+			"ORDER BY Class Asc, Surname Asc"
+			
+	
+
+	RS = SQL.ExecQuery(sQuery)
+	Do While RS.NextRow
+		Dim rData() As String = Array As String(RS.GetString("Class"),  RS.GetString("FirstName") & " " & RS.GetString("Surname"),  RS.GetString("ID"))
+		
+		L.Add(rData)
+	Loop
+	RS.Close
+	
+	Data.Put("RowData",L)
+	
+	DateTime.DateFormat="dd/MM/yyyy HH:mm:ss"
+	dtCurrent=DateTime.Date(DateTime.Now)
+	
+	'Static field footer
+	Data.Put("Footer", cSchool & " " & dtCurrent)
+	
+	'Assign the data
+	RW.Data = Data
+	
+	RW.PreviewSetup(30,30,30,30,False,False)
+	RW.PreviewShow(0)
+	
+End Sub
+
+Sub StaffUserIDReport
+	'=====================================================
+	' ClassUserID Report
+	'=============
+	'
+	' 0.1	20/01/23			Initial
+	'
+	' Purpose:
+	'=========
+	' Create an onscreen and therefore printable report of User IDs by Class
+	' borrowed grouped by Class using Steve05's methodology
+	
+	
+	Private RW As ReportWriter
+	Private dtCurrent As String
+	
+	RW.Initialize("rptStaffUserIDList",487,733)
+	
+	'Position the working form off the screen
+	RW.PositionForm(-800,0)
+
+	'Set subtotals to display on change of data in column 0
+	RW.GroupBy(0)
+	
+	'Set totals
+	RW.ShowTotal = False
+	
+	'Setup some test data
+	Dim Data As Map
+	Data.Initialize
+	
+	'Static field header
+	Data.Put("Header","User ID Report")
+	
+	'Set up the row data (List of arrays)
+	Dim L As List
+	L.Initialize
+	
+	Private sQuery As String
+	Private RS As ResultSet
+	
+	sQuery=" SELECT Class, FirstName, Surname, ID FROM tbluser WHERE Staff=True " &  _
+			"ORDER BY Class Asc, Surname Asc"
+			
+
+	RS = SQL.ExecQuery(sQuery)
+	Do While RS.NextRow
+		Dim rData() As String = Array As String(RS.GetString("Class"),  RS.GetString("FirstName") & " " & RS.GetString("Surname"),  RS.GetString("ID"))
+		
+		L.Add(rData)
+	Loop
+	RS.Close
+	
+	Data.Put("RowData",L)
+	
+	DateTime.DateFormat="dd/MM/yyyy HH:mm:ss"
+	dtCurrent=DateTime.Date(DateTime.Now)
+	
+	'Static field footer
+	Data.Put("Footer", cSchool & " " & dtCurrent)
+	
+	'Assign the data
+	RW.Data = Data
+	
+	RW.PreviewSetup(30,30,30,30,False,False)
+	RW.PreviewShow(0)
+	
+End Sub
+
+Sub BorrowedByClassReport
+	'=====================================================
+	' BorrowedbyClass Report
+	'=============
+	'
+	' 0.1	10/02/20			Initial
+	'
+	' Purpose:
+	'=========
+	' Create an onscreen and therefore printable report of what books are marked as
+	' borrowed grouped by Class using Steve05's methodology
+	
+	
+	Private RW As ReportWriter
+	Private dtCurrent As String
+	
+	RW.Initialize("rptBorrowedBooksByClass",487,733)
+	
+	'Position the working form off the screen
+	RW.PositionForm(-800,0)
+
+	'Set subtotals to display on change of data in column 0
+	RW.GroupBy(0)
+	
+	'Set totals
+	RW.ShowTotal = False
+	
+	'Setup some test data
+	Dim Data As Map
+	Data.Initialize
+	
+	'Static field header
+	Data.Put("Header","List by Class of Books Borrowed")
+	
+	'Set up the row data (List of arrays)
+	Dim L As List
+	L.Initialize
+	
+	Private sQuery As String
+	Private RS As ResultSet
+	
+	sQuery=" SELECT tblborrow.ID, tblborrow.`User`, tblborrow.Book, 	tblborrow.DateOut, 	tblborrow.`Status`, "  & _
+			"tbluser.FirstName, tbluser.Surname, tbluser.ID, tbluser.Class, "  & _
+			"tblbook.Title, tblbook.Author, tblbook.BabcockCode, datediff( CURDATE( ), tblborrow.DateOut) As DaysBorrowed " & _
+			"FROM tblborrow INNER JOIN tbluser ON tblborrow.`User` = tbluser.ID " & _
+			"INNER JOIN tblbook ON tblborrow.Book = tblbook.BabcockCode " & _
+			"WHERE 	tblborrow.`Status` = 1 " &  _
+			"ORDER BY tbluser.Class Asc, tbluser.Surname Asc"
+			
+
+	RS = SQL.ExecQuery(sQuery)
+	Do While RS.NextRow
+		Dim rData() As String = Array As String(RS.GetString("Class"),  RS.GetString("FirstName") & " " & RS.GetString("Surname"),  RS.GetString("Title"),  RS.GetString("Author"),  RS.GetString("DaysBorrowed"))
+		
+		L.Add(rData)
+	Loop
+	RS.Close
+	
+	Data.Put("RowData",L)
+	
+	DateTime.DateFormat="dd/MM/yyyy HH:mm:ss"
+	dtCurrent=DateTime.Date(DateTime.Now)
+	
+	'Static field footer
+	Data.Put("Footer", cSchool & " " & dtCurrent)
+	
+	'Assign the data
+	RW.Data = Data
+	
+	RW.PreviewSetup(30,30,30,30,False,False)
+	RW.PreviewShow(0)
+	
+End Sub
+
+Sub draw_barcode_EAN13 (mes As String, cnvCurrent As Canvas)
+	
+	'=====================================================
+	' draw_barcode_EAN13
+	'=============
+	'
+	' 0.1	10/02/20			Initial
+	'
+	' Purpose:
+	'=========
+	' Draw barcode according to EAN13 protocol
+	' Used in ISBN barcodes with error checking
+	'
+	' Passed Parameters
+	'==================
+	' mes  			String 		full encoded data of barcode
+	' cnvCurrent	Canvas		Where to draw it (offscreen)
+
+	Dim mywidth As Int = cnvCurrent.Width
+	Dim myheight As Int = cnvCurrent.Height
+	Dim silent As Int = (mywidth - 4*su.stringLength(mes))/2
+
+	Log (mywidth)
+	Log (myheight)
+	Log (silent)
+
+	Dim cnt As Int = silent + 1
+	For i = 0 To su.stringLength(mes) - 1
+		If su.Mid(mes,i,1) = "1" Then
+			cnvCurrent.DrawRect(cnt,10,4,80,fx.Colors.Black,True,2)
+		Else
+			cnvCurrent.DrawRect(cnt,10,4,80,fx.Colors.White,True,2)
+		End If
+		cnt = cnt + 4
+	Next
+
+End Sub
+
+Sub draw_barcode_Code39 (mes As String, cnvCurrent As Canvas)
+	'=====================================================
+	' draw_barcode_Code39
+	'=============
+	'
+	' 0.1	10/02/20			Initial
+	'
+	' Purpose:
+	'=========
+	' Draw barcode according to Code39 protocol
+	' Used for user ID as no error hecking bits
+	'
+	' Passed Parameters
+	'==================
+	' mes  			String 		full encoded data of barcode
+	' cnvCurrent	Canvas		Where to draw it (offscreen)
+	
+	Dim mywidth As Int = cnvCurrent.Width
+	Dim myheight As Int = cnvCurrent.Height
+	Dim silent As Int = (mywidth - 4*su.stringLength(mes))/2
+
+	Log (mywidth)
+	Log (myheight)
+	Log (silent)
+
+	Dim cnt As Int = silent + 1
+	For i = 0 To su.stringLength(mes) - 1
+		If su.Mid(mes,i,1) = "1" Then
+			cnvCurrent.DrawRect(cnt,10,4,80,fx.Colors.Black,True,2)
+		Else
+			cnvCurrent.DrawRect(cnt,10,4,80,fx.Colors.White,True,2)
+		End If
+		cnt = cnt + 4
+	Next
+
+End Sub
+
+
+Sub SaveBarcode(code As String)
+	
+	'=====================================================
+	' SaveBarcode
+	'=============
+	'
+	' 0.1	10/02/20			Initial
+	'
+	' Purpose:
+	'=========
+	' Save Canvas (Barcode) to AppData\Roaming\SchoolLibrary folder
+	'
+	' Passed Parameters
+	'==================
+	' code  		String 		the ID of the barcode to be saved
+	
+	
+	Private tmpFileName As String
+	'now save to temporary filw
+	tmpFileName= code & ".png" ' just the basic number
+	Dim strURL As String 
+	
+	strURL = constDataLocation & "\" & tmpFileName
+	
+	Dim out As OutputStream = File.OpenOutput(constDataLocation, tmpFileName, False)
+	
+	cnvBarcode.Snapshot.WriteToStream(out)
+	out.Close
+	
+	Private sQuery As String
+	
+	sQuery="UPDATE tbluser SET BarcodeURL=?, BarcodeBlob=? WHERE ID=?;"
+	SQL.ExecNonQuery2(sQuery, Array As Object(strURL, FileToBytes(constDataLocation, tmpFileName), code))
+	
+	RecordEvent(tmpFileName & " has been saved to " & strURL)
+	
+End Sub
+
+Sub generateBarcode(msg As String)
+	
+	'=====================================================
+	' generateBarcode
+	'=============
+	'
+	' 0.1	10/02/20			Initial
+	'
+	' Purpose:
+	'=========
+	' Draw barcode according to Code39 protocol and save it
+	'
+	' Passed Parameters
+	'==================
+	' mes  			String 		the code needed to create (ie UserID)
+	
+	'Barcode.Show
+	Dim binstring As String = ""
+	
+	
+	If msg.Length>0 Then
+		
+		'	Code 39 for User Barcode 30/1/20	
+			binstring = Code39.Draw_Code39(msg)
+			draw_barcode_Code39(binstring, cnvBarcode)
+			SaveBarcode(msg)
+	End If
+	
+End Sub
+
+Sub btnGenerateAllBarcodes_Click
+	'=====================================================
+	' btnGenerateAllBarcodes_Click
+	'=============
+	'
+	' 0.1	10/02/20			Initial
+	'
+	' Purpose:
+	'=========
+	' Admin user can create barcode for each user on the system
+	' so that Access reports can generate appropriate reports
+	
+	Private Dialog As B4XDialog
+	
+	Dialog.Initialize(Settings.RootPane)
+	
+	Dialog.Title=cSchool
+	Dialog.BlurBackground=True
+
+	Wait For (Dialog.Show("This will re-create barcodes for all users - Proceed?", "YES", "NO", "")) Complete (Result As Int)
+	If Result = XUI.DialogResponse_Positive Then
+
+			Private RS As ResultSet
+			Private sQuery As String
+			Private intID As Int
+			Private progress As Double
+			
+			pgBarcodes.Value=0
+			
+			sQuery="SELECT ID As lastUser FROM tbluser ORDER BY ID DESC"
+			RS=SQL.ExecQuery(sQuery)
+					
+			Do While RS.NextRow
+				intID=RS.GetInt("lastuser")
+				generateBarcode(intID)
+				pgBarcodes.Value=progress
+				progress=progress+0.25
+				Sleep(10) ' necessary to show progres bar (how ironic!)				
+			Loop
+
+			RS.Close
+	
+	pgBarcodes.Value=0
+	
+		Wait For (Dialog.Show("All Barcodes Redone", "OK" , "", "")) Complete (Result As Int)
+	
+	End If
+	
+End Sub
+
+' Not sure if we will need these routines
+' a) Extract blob to file
+'Sub BytesToFile (Dir As String, FileName As String, Data() As Byte)
+'	Dim out As OutputStream = File.OpenOutput(Dir, FileName, False)
+'	out.WriteBytes(Data, 0, Data.Length)
+'	out.Close
+'End Sub
+
+' b) save file to blob
+Sub FileToBytes (Dir As String, FileName As String) As Byte()
+	Return Bit.InputStreamToBytes(File.OpenInput(Dir, FileName))
+End Sub
+
+
+Sub btnAdd_Click
+	'=====================================================
+	' btnAdd_Click
+	'=============
+	'
+	' 0.1	10/02/20			Initial
+	'
+	' Purpose:
+	'=========
+	' Add book to the deleted list
+	
+	If txtBarcodeDelete.Text.Length>0 Then
+		
+		Private sTitle As String
+		Private sAuthor As String
+		Private sBook As String
+				
+		sBook=getBookDetails(txtBarcodeDelete.Text)
+		
+		If sBook<>"" Then 
+		
+			sTitle=sBook.SubString2(0, sBook.IndexOf(Chr(13)))
+			sAuthor=sBook.SubString(sBook.LastIndexOf(Chr(13))+1)
+			
+			RecordEvent("Title: " & sTitle & " Author: " & sAuthor)
+			Dim rData As Object = Array(txtBarcodeDelete.Text, sTitle, sAuthor)
+			delBookList.Add(rData)
+			flgJustDeleted=False
+			txtBarcodeDelete.Text=""
+			txtBarcodeDelete.Focused=True
+		Else
+			DialogMsg("That book cannot be found. Scan the Babcock Code again.", Settings.RootPane)
+			
+		End If
+		
+		tblbookList.Clear
+		tblbookList.AddColumn("ID", tblbookList.COLUMN_TYPE_TEXT)
+		tblbookList.AddColumn("Author", tblbookList.COLUMN_TYPE_TEXT)
+		tblbookList.AddColumn("Title", tblbookList.COLUMN_TYPE_TEXT)
+		tblbookList.SetData(delBookList)
+		tblbookList.Refresh
+		
+	End If
+	
+	
+End Sub
+
+Sub txtBarcodeDelete_EnterPressed
+	' if bulk book delete field enter is pressed, do the same as if add button was clicked
+	btnAdd_Click
+End Sub
+
+Sub tblbookList_SelectedRowChanged(Index As Int, Row() As Object)
+	'=====================================================
+	' tblbookList_SelectedRowChanged
+	'=============
+	'
+	' 0.1	10/02/20			Initial
+	'
+	' Purpose:
+	'=========
+	' Remove book from the deleted list
+	
+	If flgJustDeleted=False Then
+		
+			Private Dialog As B4XDialog
+			
+			Dialog.Initialize(Settings.RootPane)
+			
+			Dialog.Title=cSchool
+			Dialog.BlurBackground=True
+
+			Wait For (Dialog.Show("Do you want to remove this record from the to-be-deleted list?", "YES", "NO", "")) Complete (Result As Int)
+			If Result = XUI.DialogResponse_Positive Then
+				' confirmed so remove this row
+						delBookList.RemoveAt(Index)
+						flgJustDeleted=True
+			End If
+	
+	End If
+
+	tblbookList.Clear
+	tblbookList.AddColumn("ID", tblbookList.COLUMN_TYPE_NUMBERS)
+	tblbookList.AddColumn("Author", tblbookList.COLUMN_TYPE_TEXT)
+	tblbookList.AddColumn("Title", tblbookList.COLUMN_TYPE_TEXT)
+	tblbookList.SetData(delBookList)
+	
+End Sub
+
+Sub btnBulkDelete_Click
+	'=====================================================
+	' btnBulkDelete_Click
+	'=============
+	'
+	' 0.1	10/02/20			Initial
+	' 0.2   15/5/20  			Fix B4XTable Bugs and simplify deleing process
+	'
+	' Purpose:
+	'=========
+	' Enact bulk delete
+	
+	Private Dialog As B4XDialog
+		
+	Dialog.Initialize(Settings.RootPane)
+	
+	Dialog.Title=cSchool
+	Dialog.BlurBackground=True
+
+	Wait For (Dialog.Show("Do you want to PERMANENTLY delete these books?", "YES", "NO", "")) Complete (Result As Int)
+	
+	If Result = XUI.DialogResponse_Positive Then
+		' confirmed so delete these books
+		
+		Private sQuery As String
+		Private sInput As List
+
+		sInput.Initialize
+			' now to build list of books from the table
+			
+		Dim o() As Object = tblbookList.BuildQuery(False) 'no page limit
+		Dim rs As ResultSet = tblbookList.sql1.ExecQuery2(o(0), o(1))
+		Do While rs.NextRow
+			sQuery="DELETE FROM tblbook WHERE BabcockCode='" & rs.GetString(tblbookList.GetColumn("ID").SQLID) & "';"
+			RecordEvent("Deleting " & rs.GetString(tblbookList.GetColumn("ID").SQLID))
+			SQL.ExecNonQuery(sQuery)
+		Loop
+		rs.Close
+					
+
+		
+		DialogMsg("These books have been permanently deleted from the School Library System", Settings.RootPane)
+		
+		'if necessary, redo the table
+	
+		delBookList.Clear
+		tblbookList.Clear
+		tblbookList.AddColumn("ID", tblbookList.COLUMN_TYPE_NUMBERS)
+		tblbookList.AddColumn("Author", tblbookList.COLUMN_TYPE_TEXT)
+		tblbookList.AddColumn("Title", tblbookList.COLUMN_TYPE_TEXT)
+		tblbookList.SetData(delBookList)
+		
+	End If
+	
+End Sub
+
+
+Sub tblVBorrowedReturn_CellClicked (ColumnId As String, RowId As Long)
+	'=====================================================
+	' tblVBorrowedReturn_CellClicked
+	'=============
+	'
+	' 0.1	11/04/20			Initial
+	'
+	' Purpose:
+	'=========
+	' User can seleect a book from the list of books they have in their list
+	' extracts the value of column 0 as index (BabcockCode)
+	
+	
+	Dim value As String 
+	
+	Log("Row=" & RowId)
+	
+	value = tblVBorrowedReturn.GetRow(RowId).GetValueAt(0) 
+	
+	If RowId>=0 Then
+		Log("User chooses to return book - " & value)
+		txtRTBook.Text=value
+		txtRTBook.RequestFocus
+	End If
+	
+End Sub
+
+Sub populateCurrentUserBookList(uid As Int)
+	'=====================================================
+	' populateCurrentUserBookList
+	'=============
+	'
+	' 0.1	11/04/20			Initial
+	
+	' Parameters
+	'============
+	' uid		int		UserID
+	'
+	' Purpose:
+	'=========
+	' What books has someone borrowed, populte global list userBookList
+	
+	
+	Private RS As ResultSet
+	Private sQuery As String
+
+	If IsNumber(uid) Then  ' continue
+	
+		sQuery="SELECT	tblborrow.Book, tblborrow.DateOut, 	tblborrow.`Status`,	tblborrow.`User`,	tblborrow.ID,	tblbook.Title,	tblbook.Author " & _
+				"FROM tblborrow	INNER JOIN tblbook ON tblborrow.Book = tblbook.BabcockCode " & _
+				"WHERE tblborrow.`Status` = 1 And tblborrow.`User` = ?;"
+		 
+		RecordEvent("Populating curent booklist for " & uid )
+				
+		RS = SQL.ExecQuery2(sQuery, Array As Object(uid))
+		Do While RS.NextRow
+		
+			Dim rData() As Object = Array(RS.GetLong("Book"), RS.GetString("Title"), RS.GetString("Author"), RS.GetString("DateOut"))
+			userBookList.Add(rData)
+			
+		Loop
+		RS.Close
+	
+	End If ' IsNumber
+	
+End Sub
+
+
+Sub btnFSBooks_Click
+	
+	'=====================================================
+	' FSBooks_Click
+	'=============
+	'
+	' 0.1	11/04/20			Initial
+	
+	' Parameters
+	'============
+	' None
+	'
+	' Purpose:
+	'=========
+	' Produce a full page of Book Data for a table and enable inline editing
+	
+	Private RS As ResultSet
+	Private sQuery As String
+	Private fullBooks As List
+	
+	fullBooks.Initialize
+	
+	sQuery="SELECT * FROM tblbook;"
+		 
+				
+	RS = SQL.ExecQuery(sQuery)
+	Do While RS.NextRow
+		
+		Dim rData() As Object = Array(RS.GetString("BabcockCode"), RS.GetString("Title"), RS.GetString("Author"), RS.GetString("Category"), RS.GetString("ISBN"), _
+		                              RS.GetInt("Owner"), RS.GetString("Media"), RS.GetString("BookStatus"), _
+									  RS.GetString("ReadingLevel"), RS.GetString("ARQuiz"), RS.GetLong("OutTo"), RS.GetString("Blurb"), RS.GetString("DeweyRef"))
+									  
+		fullBooks.Add(rData)
+			
+	Loop
+	RS.Close
+	
+	tblFSBooks.AddColumn("BabcockCode", tblFSBooks.COLUMN_TYPE_TEXT)
+	tblFSBooks.AddColumn("Title", tblFSBooks.COLUMN_TYPE_TEXT)
+	tblFSBooks.AddColumn("Author", tblFSBooks.COLUMN_TYPE_TEXT)
+	tblFSBooks.AddColumn("Category", tblFSBooks.COLUMN_TYPE_TEXT)
+	tblFSBooks.AddColumn("ISBN", tblFSBooks.COLUMN_TYPE_TEXT)
+	tblFSBooks.AddColumn("Owner", tblFSBooks.COLUMN_TYPE_TEXT)
+	tblFSBooks.AddColumn("Media", tblFSBooks.COLUMN_TYPE_TEXT)
+	tblFSBooks.AddColumn("BookStatus", tblFSBooks.COLUMN_TYPE_TEXT)
+	tblFSBooks.AddColumn("ReadingLevel", tblFSBooks.COLUMN_TYPE_TEXT)
+	tblFSBooks.AddColumn("ARQuiz", tblFSBooks.COLUMN_TYPE_TEXT)
+	tblFSBooks.AddColumn("OutTo", tblFSBooks.COLUMN_TYPE_TEXT)
+	tblFSBooks.AddColumn("Blurb", tblFSBooks.COLUMN_TYPE_TEXT)
+	tblFSBooks.AddColumn("DeweyRef", tblFSBooks.COLUMN_TYPE_TEXT)
+	
+	tblFSBooks.SetData(fullBooks)
+		
+	FSBooks.Show
+	
+End Sub
+
+'==================INLINE EDITING FOR FSBOOKS ===========================
+
+Sub tblFSBooks_CellClicked (ColumnId As String, RowId As Long)
+	'=====================================================
+	' tblFSBooks_CellClicked
+	'=============
+	'
+	' 0.1	11/04/20			Initial
+	
+	' Parameters
+	'============
+	' ColumnId		String		title at head of column
+	' RowId			Long		Index of row clicked
+	'
+	' Purpose:
+	'=========
+	' Enable a popup template to edit clicked cell
+	' not true inline editing but very effective with minimal code
+		
+	Private Dialog As B4XDialog
+	Private InputTemplate As B4XInputTemplate
+	
+	RecordEvent("Cell clicked " & ColumnId & " and " & RowId)
+	Private column As B4XTableColumn = tblFSBooks.GetColumn(ColumnId)
+	Private value As String = tblFSBooks.GetRow(RowId).Get(ColumnId)
+	RecordEvent("User Editing: " & ColumnId & " and " & RowId & " which contains " & value)
+	
+	InputTemplate.Initialize
+	Dialog.Initialize(FSBooks.RootPane)
+	
+	InputTemplate.Text = value
+	InputTemplate.lblTitle.Text = column.Id
+	Dialog.BlurBackground=True
+	Wait For (Dialog.ShowTemplate(InputTemplate, "OK", "", "CANCEL")) Complete (Result As Int)
+	If Result = XUI.DialogResponse_Positive Then
+		tblFSBooks.sql1.ExecNonQuery2($"UPDATE data SET ${column.SQLID} = ? WHERE rowid = ?"$, Array As String(InputTemplate.Text, RowId))
+		tblFSBooks.Refresh
+		writeRowToDB(InputTemplate.Text, column.Id, tblFSBooks.GetRow(RowId).GetValueAt(0))
+	End If
+End Sub
+
+Sub writeRowToDB(newRow As String, column As String, BabcockCode As String)
+	'=====================================================
+	' writeRowToDB
+	'=============
+	'
+	' 0.1	11/04/20			Initial
+	
+	' Parameters
+	'============
+	' newRow		String		new data cotent of cell
+	' column		string		name of column ie fieldname
+	' BabcockCode   string      index of book to be updated
+	'
+	' Purpose:
+	'=========
+	' Update cell in array and write the data to the database
+	'
+	Private sQuery As String
+	
+	sQuery = "UPDATE tblbook SET " & column & " = ? WHERE BabcockCode = ?"
+	
+	SQL.ExecNonQuery2(sQuery, Array As Object(newRow, BabcockCode))
+	
+	RecordEvent("Update FSTable - column = " & column & "  Row= " & BabcockCode & " with data: " & newRow)
+	
+End Sub
+
+
+Sub btnFullScreenExit_Click
+	'Close Full Screen Edit Screeen
+	
+	FSBooks.Close
+	
+End Sub
+
+Sub btnSwap_Click
+	'=====================================================
+	' btnSwap_Click
+	'=============
+	'
+	' 0.1	11/04/20			Initial
+	
+	' Parameters
+	'============
+	' None
+	'
+	' Purpose:
+	'=========
+	' take last word in Author field and put it at front with a comma
+	
+	Private txtAuthor As String
+	Private lastspace As Int
+	
+	lastspace=txtEBAuthor.Text.LastIndexOf(" ") ' search for string
+	RecordEvent("identifying author: last space found at " & lastspace)
+	
+	If lastspace=0 Then
+		' do nothing as no space found
+	Else
+		txtEBAuthor.Text=su.removeCharFromString(txtEBAuthor.Text,",")
+		txtAuthor=txtEBAuthor.Text.SubString(lastspace+1)
+		RecordEvent("identifyng author: " & txtAuthor)
+		txtEBAuthor.Text=txtEBAuthor.Text.SubString2(0, lastspace)
+		txtEBAuthor.Text=txtAuthor & ", " & txtEBAuthor.Text
+		
+	End If
+End Sub
+
+Sub btnASwap_Click
+	'=====================================================
+	' btnSwap_Click
+	'=============
+	'
+	' 0.1	11/04/20			Initial
+	
+	' Parameters
+	'============
+	' None
+	'
+	' Purpose:
+	'=========
+	' take last word in Author field and put it at front with a comma
+	
+	Private txtAuthor As String
+	Private lastspace As Int
+	
+	lastspace=txtABAuthor.Text.LastIndexOf(" ") ' search for string
+	
+	If lastspace=txtABAuthor.Text.Length Then lastspace=lastspace -1
+	
+	RecordEvent("identifying Add author: last space found at " & lastspace)
+	
+	If lastspace=0 Then
+		' do nothing as no space found
+	Else
+		txtABAuthor.Text=su.removeCharFromString(txtABAuthor.Text,",")
+		txtAuthor=txtABAuthor.Text.SubString(lastspace)
+		RecordEvent("identifyng author: " & txtAuthor)
+		txtABAuthor.Text=txtABAuthor.Text.SubString2(0, lastspace)
+		txtABAuthor.Text=txtAuthor & ", " & txtABAuthor.Text	
+		
+	End If	
+
+End Sub
+
+Sub btnDeleteBook_Click
+	'=====================================================
+	' btnDeleteBook_Click
+	'=============
+	'
+	' 0.1	15/5/20			Initial
+	
+	' Parameters
+	'============
+	' None
+	'
+	' Purpose:
+	'=========
+	' Delete current book shown on EditBook screen from DB
+	
+	
+	Private Dialog As B4XDialog
+	Private sQuery As String
+	
+	
+	Dialog.Initialize(EditBook.RootPane)
+	Dialog.Title=cSchool
+	Dialog.BlurBackground=True
+	Dialog.ButtonsFont = XUI.CreateDefaultFont(12)
+	
+	Wait For (Dialog.Show("Are you sure you want to permanently delete this book from the system?", "Yes", "No", "")) Complete (Result As Int)
+	
+	If Result = XUI.DialogResponse_Positive Then
+	
+		RecordEvent("Confirmed deletion for Book " & txtEBBabcockCode.Text)
+		sQuery = "DELETE FROM tblbook WHERE BabcockCode = ?"
+		SQL.ExecNonQuery2(sQuery, Array As Object(txtEBBabcockCode.Text))
+	
+	Wait For (Dialog.Show(txtEBTitle.Text & " has been permanently deleted from the library", "OK", "", "")) Complete (Result As Int) 
+	EditBook.Close
+	Settings.Show
+	
+	End If
+End Sub
+
+Private Sub btnUserIDByClass_Click
+	
+	'=====================================================
+	' btnUserIDByClass_Click
+	'=============
+	'
+	' 0.1	20/01/23			Initial
+	
+	' Parameters
+	'============
+	' None
+	'
+	' Purpose:
+	'=========
+	' Call Report showing ID numbers
+	
+	ClassUserIDReport
+	
+End Sub
+
+Private Sub btnStaffUserID_Click
+	
+	'=====================================================
+	' btnStaffUserID_Click
+	'=============
+	'
+	' 0.1	20/01/23			Initial
+	
+	' Parameters
+	'============
+	' None
+	'
+	' Purpose:
+	'=========
+	' Call Report showing ID numbers
+	
+	StaffUserIDReport
+	
+End Sub
+
+Private Sub btnDeleteChild_Click
+	
+	Private Dialog As B4XDialog
+	
+	Dialog.Initialize(EditChild.RootPane)
+	Dialog.Title=cSchool
+	Dialog.BlurBackground=True
+	Dialog.ButtonsFont = XUI.CreateDefaultFont(12)
+	
+	Wait For (Dialog.Show("Are you sure you want to mark this child as removed from the system?", "Yes", "No", "")) Complete (Result As Int)
+	
+	If Result = XUI.DialogResponse_Positive Then
+	
+		txtECClass.Text="XX"
+		btnECClose_Click	
+		
+	End If
+	
+End Sub
+
+'Private Sub btnFileChoose_Click
+'	
+'	DC.Initialize
+'	DC.InitialDirectory = GetSystemProperty("user.home","Documents")
+'	DC.Title="Select Backup Location"
+'
+'	txtBackupFolder.Text=DC.Show(MainForm)
+'	
+'End Sub
+'
+'Private Sub btnChooseMySQLDump_Click
+'	FC.Initialize
+'	FC.InitialDirectory = "C:\Program Files\MySQL\"
+'	FC.SetExtensionFilter("Location of MySQLDump.exe",Array("mysqldump.exe"))
+'	FileChooserUtils.SetSelectedExtensionFilter(FC,"MySQLDump Executable")
+'
+'	txtMySQLDump.Text=FC.ShowOpen(MainForm)
+'	DBMySQL=txtMySQLDump.Text
+'End Sub
+'
+'Sub BackUpDatabase
+'	
+'	' Spell is
+'	'C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump -u developer -p161787401 library > D:\library.sql
+'	
+'	Dim js As Shell
+'	Dim txtBackupFileName As String
+'	Dim outputstring As String
+'	
+'	txtBackupFileName=DateTime.Now
+'	Log("DateTime.Now: " & txtBackupFileName)
+'	
+'	If DBMySQL.IndexOf("\\")=0 Then
+'		DBMySQL=DBMySQL.Replace("\", "\\")
+'	End If
+'	
+'	If DBBackupFolder.IndexOf("\\")=0 Then
+'		DBBackupFolder=DBBackupFolder.Replace("\", "\\")
+'	End If
+'
+'	DBBackupFolder=DBBackupFolder.Replace(Chr(34), "")
+'	DBMySQL=DBMySQL.Replace(Chr(34), "")
+'			
+'	outputstring= Chr(34) & DBMySQL &  Chr(34) & _
+'	                 " -u " & txtSettingsUsername.Text & " -p" & txtSettingsPassword.Text & " " & _
+'					 txtSettingsDatabase.Text & " > " & Chr(34) & DBBackupFolder & "\" & _
+'					 txtBackupFileName & ".sql" & Chr(34)
+'					 
+'	Log(outputstring)
+'	File.WriteString("C:\Users\Public", "LibraryBackup.bat",outputstring & Chr(10) & Chr(13) & "exit")
+'
+'
+'	js.Initialize("js", "cmd.exe", Array As String("/c", "start", "C:\Users\Public\LibraryBackup.bat"))
+'	js.WorkingDirectory = "C:\Users\Public"
+'	js.Run(-1)
+'	
+'End Sub
+'
+'Private Sub btnDoBackup_Click
+'	
+'	BackUpDatabase
+'	
+'End Sub
+'
+'
+'
+'Private Sub txtMySQLDump_TextChanged (Old As String, New As String)
+'	
+'	If DBMySQL<>New Then
+'		'write settings to database
+'		SaveSettings
+'
+'	End If
+'	
+'End Sub
+'
+'Private Sub txtBackupFolder_TextChanged (Old As String, New As String)
+'	If DBBackupFolder<>New Then
+'
+'		SaveSettings
+'
+'	End If
+'End Sub
+'
+'Private Sub swNightlyBackup_ValueChanged (Value As Boolean)
+'	
+'	If Value=True Then
+'		DialogMsg("Nightly Backups are ON", Settings.RootPane)	
+'		blNightlyBackups=1
+'		SaveSettings	
+'	Else
+'		DialogMsg("Nightly Backups are OFF", Settings.RootPane)
+'		blNightlyBackups=0
+'		SaveSettings
+'	End If
+'
+'End Sub
+
+Private Sub SaveSettings
+	
+	Private Dialog As B4XDialog
+	
+	Dialog.Initialize(Settings.RootPane)
+	
+	Dialog.Title="School Library Configuration Change"
+	Dialog.BlurBackground=True
+
+	Wait For (Dialog.Show("Do you want to update the Configuration?", "YES", "NO", "")) Complete (Result As Int)
+	If Result = XUI.DialogResponse_Positive Then
+		Private NewSettingsMap As Map
+		NewSettingsMap = CreateMap ("IPAddress": txtSettingsIPAddress.Text, "Username": txtSettingsUsername.Text, _
+				                            "Password": txtSettingsPassword.Text, "Database":txtSettingsDatabase.Text, _
+											"SchoolName": txtSettingsSchoolName.Text, "AdminPass": txtSettingsAdminPassword.Text)
+											' "MySQLDump" : Chr(34) & txtMySQLDump.Text & Chr(34), _
+											' "BackupFolder" : Chr(34) & txtBackupFolder.Text & Chr(34), _ ' always escape the BACKUP location
+											' "NightlyBackups" : blNightlyBackups _
+											
+		File.WriteMap(constDataLocation, SettingsFile, NewSettingsMap)
+						
+		' reset data by reloading
+		ReadSettings
+				
+		'==========REINITIATE DATABASE CONNECTION=================
+		SQL.Close
+		SQL.InitializeAsync("MySQLRestart", "com.mysql.jdbc.Driver", $"jdbc:mysql://${DBLocation}/${DBName}?useSSL=false"$, DBUsername, DBPassword)
+	End If
+	
+End Sub
